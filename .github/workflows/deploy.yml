@@ -47,6 +47,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./main/
           server-dir: /public_html/
+          dangerous-clean-slate: true
 
   deploy-proposal1:
     needs: detect-changes
