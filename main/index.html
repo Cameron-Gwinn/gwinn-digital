@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gwinn Digital — Your Website. Delivered.</title>
   <meta name="description" content="Professional websites for your business — starting at $300/month. Custom design, fast delivery, ongoing support.">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23ff3366'/><stop offset='50%25' stop-color='%233366ff'/><stop offset='100%25' stop-color='%239933ff'/></linearGradient></defs><rect width='32' height='32' rx='6' fill='%230a0a0f'/><text x='4' y='23' font-family='Arial Black' font-weight='900' font-size='18' fill='url(%23g)'>G</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23e05555'/><stop offset='100%25' stop-color='%23e05555'/></linearGradient></defs><rect width='32' height='32' rx='6' fill='%230a0a0f'/><text x='4' y='23' font-family='Arial Black' font-weight='900' font-size='18' fill='url(%23g)'>G</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -174,28 +174,6 @@
       animation: gradientShift 4s ease infinite;
     }
 
-    /* ── Top Bar ── */
-    .top-bar {
-      background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6));
-      background-size: 200% 100%;
-      animation: gradientShift 6s linear infinite;
-      padding: 10px 0;
-      text-align: center;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #fff;
-      position: relative;
-      z-index: 101;
-    }
-    .top-bar a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 16px;
-      transition: opacity 0.3s;
-    }
-    .top-bar a:hover { opacity: 0.8; }
-    .top-bar .separator { opacity: 0.4; margin: 0 8px; }
-
     /* ── Nav ── */
     nav {
       position: fixed;
@@ -221,23 +199,9 @@
       align-items: center;
       gap: 10px;
     }
-    .nav-logo .logo-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      color: #fff;
-    }
     .nav-logo .logo-gwinn {
-      background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-3), var(--rainbow-5));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #e05555;
+      -webkit-text-fill-color: #e05555;
     }
     .nav-logo .logo-digital {
       color: #fff;
@@ -1330,18 +1294,10 @@
   <!-- Rainbow Bubbles -->
   <div class="bubbles-container" id="bubbles"></div>
 
-  <!-- Top Contact Bar -->
-  <div class="top-bar">
-    <a href="mailto:cameron@gwinndigital.com">cameron@gwinndigital.com</a>
-    <span class="separator">|</span>
-    <a href="tel:+14697772518">(469) 777-2518</a>
-  </div>
-
   <!-- Nav -->
   <nav id="mainNav">
     <div class="container">
       <a href="#" class="nav-logo magnetic">
-        <span class="logo-icon">G</span>
         <span><span class="logo-gwinn">GWINN</span><span class="logo-digital">DIGITAL</span></span>
       </a>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -1440,9 +1396,9 @@
       </div>
       <div class="reveal" style="transition-delay: 0.45s;">
         <div class="hero-contact">
-          <a href="mailto:cameron@gwinndigital.com">cameron@gwinndigital.com</a>
+          <a href="mailto:info@gwinndigital.com">info@gwinndigital.com</a>
           <span class="dot">&bull;</span>
-          <a href="tel:+14697772518">(469) 777-2518</a>
+          <a href="tel:+12146959919">(214) 695-9919</a>
         </div>
       </div>
       <div class="reveal" style="transition-delay: 0.55s;">
@@ -1698,11 +1654,11 @@
       <p class="section-label">Ready?</p>
       <h2>Let's Build<br><span class="gradient-text">Something Great.</span></h2>
       <p>Reach out and we'll get your project moving — fast.</p>
-      <a href="mailto:cameron@gwinndigital.com" class="cta-btn magnetic">Get In Touch</a>
+      <a href="mailto:info@gwinndigital.com" class="cta-btn magnetic">Get In Touch</a>
       <div class="contact-row">
-        <a href="mailto:cameron@gwinndigital.com" class="contact-link">cameron@gwinndigital.com</a>
+        <a href="mailto:info@gwinndigital.com" class="contact-link">info@gwinndigital.com</a>
         <span style="color: rgba(255,255,255,0.1);">|</span>
-        <a href="tel:+14697772518" class="contact-link">(469) 777-2518</a>
+        <a href="tel:+12146959919" class="contact-link">(214) 695-9919</a>
       </div>
     </div>
   </section>
@@ -1883,23 +1839,6 @@
       });
     })();
 
-    // ── Nav hide/show on scroll ──
-    (function() {
-      var nav = document.getElementById('mainNav');
-      var topBar = document.querySelector('.top-bar');
-      var lastScroll = 0;
-
-      window.addEventListener('scroll', function() {
-        var st = window.scrollY;
-        if (st > 50) {
-          topBar.style.transform = 'translateY(-100%)';
-          topBar.style.transition = 'transform 0.3s';
-        } else {
-          topBar.style.transform = 'translateY(0)';
-        }
-        lastScroll = st;
-      });
-    })();
   </script>
 </body>
 </html>
