@@ -302,18 +302,296 @@
       filter: blur(100px);
       pointer-events: none;
     }
-    .hero-content { position: relative; z-index: 2; }
+
+    /* Floating design elements */
+    .hero-elements {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-el {
+      position: absolute;
+      border-radius: 12px;
+      opacity: 0;
+      animation: heroElFade 1s ease forwards;
+    }
+
+    /* Browser mockup */
+    .hero-browser {
+      width: 260px;
+      top: 18%;
+      left: 3%;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      animation-delay: 0.3s;
+      transform: rotate(-6deg);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .hero-browser .browser-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .hero-browser .browser-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .hero-browser .browser-dot:nth-child(1) { background: #ff5f57; }
+    .hero-browser .browser-dot:nth-child(2) { background: #ffbd2e; }
+    .hero-browser .browser-dot:nth-child(3) { background: #28c840; }
+    .hero-browser .browser-url {
+      flex: 1;
+      margin-left: 8px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 4px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      font-size: 0.55rem;
+      color: var(--muted);
+      font-family: var(--font-body);
+    }
+    .hero-browser .browser-body {
+      padding: 16px;
+      min-height: 120px;
+    }
+    .hero-browser .browser-line {
+      height: 6px;
+      border-radius: 3px;
+      margin-bottom: 8px;
+      opacity: 0.15;
+    }
+    .hero-browser .browser-line:nth-child(1) { width: 60%; background: var(--rainbow-1); }
+    .hero-browser .browser-line:nth-child(2) { width: 80%; background: var(--rainbow-5); }
+    .hero-browser .browser-line:nth-child(3) { width: 45%; background: var(--rainbow-6); }
+    .hero-browser .browser-line:nth-child(4) { width: 70%; background: var(--rainbow-3); }
+    .hero-browser .browser-block {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .hero-browser .browser-rect {
+      flex: 1;
+      height: 40px;
+      border-radius: 6px;
+      opacity: 0.1;
+    }
+    .hero-browser .browser-rect:nth-child(1) { background: var(--rainbow-1); }
+    .hero-browser .browser-rect:nth-child(2) { background: var(--rainbow-5); }
+    .hero-browser .browser-rect:nth-child(3) { background: var(--rainbow-3); }
+
+    /* Code snippet */
+    .hero-code {
+      width: 220px;
+      top: 18%;
+      right: 3%;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 18px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.65rem;
+      line-height: 1.8;
+      color: var(--muted);
+      animation-delay: 0.5s;
+      transform: rotate(4deg);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .hero-code .code-keyword { color: var(--rainbow-6); }
+    .hero-code .code-tag { color: var(--rainbow-1); }
+    .hero-code .code-attr { color: var(--rainbow-3); }
+    .hero-code .code-string { color: var(--rainbow-4); }
+    .hero-code .code-comment { color: rgba(136,136,170,0.5); font-style: italic; }
+
+    /* Color palette */
+    .hero-palette {
+      bottom: 20%;
+      left: 6%;
+      display: flex;
+      gap: 8px;
+      animation-delay: 0.7s;
+      transform: rotate(-3deg);
+    }
+    .hero-palette .swatch {
+      width: 44px;
+      height: 56px;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .hero-palette .swatch:nth-child(1) { background: var(--rainbow-1); }
+    .hero-palette .swatch:nth-child(2) { background: var(--rainbow-3); }
+    .hero-palette .swatch:nth-child(3) { background: var(--rainbow-5); }
+    .hero-palette .swatch:nth-child(4) { background: var(--rainbow-6); }
+    .hero-palette .swatch:nth-child(5) { background: var(--rainbow-4); }
+
+    /* Mobile mockup */
+    .hero-phone {
+      width: 120px;
+      height: 220px;
+      bottom: 14%;
+      right: 6%;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 8px;
+      animation-delay: 0.9s;
+      transform: rotate(8deg);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .hero-phone .phone-notch {
+      width: 40px;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      margin: 4px auto 10px;
+    }
+    .hero-phone .phone-line {
+      height: 4px;
+      border-radius: 2px;
+      margin-bottom: 6px;
+      opacity: 0.15;
+    }
+    .hero-phone .phone-line:nth-child(2) { width: 70%; background: var(--rainbow-1); }
+    .hero-phone .phone-line:nth-child(3) { width: 50%; background: var(--rainbow-5); }
+    .hero-phone .phone-line:nth-child(4) { width: 85%; background: var(--rainbow-3); }
+    .hero-phone .phone-btn {
+      width: 60%;
+      height: 16px;
+      background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-6));
+      border-radius: 8px;
+      margin: 12px auto 0;
+      opacity: 0.5;
+    }
+    .hero-phone .phone-img {
+      width: 90%;
+      height: 50px;
+      background: linear-gradient(135deg, rgba(51,102,255,0.15), rgba(153,51,255,0.15));
+      border-radius: 6px;
+      margin: 8px auto;
+    }
+
+    /* Floating shapes */
+    .hero-shape {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0;
+      animation: heroElFade 1s ease forwards;
+    }
+    .hero-shape.circle-outline {
+      width: 80px;
+      height: 80px;
+      border: 2px solid rgba(255,51,102,0.2);
+      border-radius: 50%;
+      top: 10%;
+      right: 25%;
+      animation-delay: 0.4s;
+      animation: heroElFade 1s ease 0.4s forwards, spin 20s linear infinite;
+    }
+    .hero-shape.cross {
+      top: 70%;
+      left: 22%;
+      width: 30px;
+      height: 30px;
+      animation-delay: 0.6s;
+    }
+    .hero-shape.cross::before, .hero-shape.cross::after {
+      content: '';
+      position: absolute;
+      background: rgba(255,204,0,0.25);
+    }
+    .hero-shape.cross::before { width: 100%; height: 4px; top: 50%; transform: translateY(-50%); border-radius: 2px; }
+    .hero-shape.cross::after { height: 100%; width: 4px; left: 50%; transform: translateX(-50%); border-radius: 2px; }
+
+    .hero-shape.triangle {
+      top: 25%;
+      left: 30%;
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-bottom: 30px solid rgba(51,102,255,0.15);
+      animation-delay: 1s;
+      border-radius: 0;
+    }
+    .hero-shape.dots {
+      bottom: 30%;
+      right: 22%;
+      display: grid;
+      grid-template-columns: repeat(3, 8px);
+      gap: 8px;
+      animation-delay: 0.8s;
+    }
+    .hero-shape.dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(153,51,255,0.25);
+    }
+
+    @keyframes heroElFade {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* Float animation for hero elements */
+    .hero-float {
+      animation: heroElFade 1s ease 0.3s forwards, heroFloat 6s ease-in-out 1.3s infinite;
+    }
+    .hero-float-delay {
+      animation: heroElFade 1s ease 0.5s forwards, heroFloat 6s ease-in-out 1.5s infinite;
+    }
+    .hero-float-slow {
+      animation: heroElFade 1s ease 0.7s forwards, heroFloat 8s ease-in-out 1.7s infinite;
+    }
+    .hero-float-fast {
+      animation: heroElFade 1s ease 0.9s forwards, heroFloat 4s ease-in-out 1.9s infinite;
+    }
+    @keyframes heroFloat {
+      0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+      50% { transform: translateY(-15px) rotate(var(--rot, 0deg)); }
+    }
+
+    @media (max-width: 900px) {
+      .hero-browser { width: 180px; top: 8%; left: 2%; }
+      .hero-code { width: 160px; top: 8%; right: 2%; font-size: 0.5rem; }
+      .hero-phone { width: 80px; height: 150px; }
+      .hero-palette .swatch { width: 30px; height: 40px; }
+      .hero-shape { display: none; }
+    }
+    @media (max-width: 600px) {
+      .hero-browser, .hero-code, .hero-phone, .hero-palette, .hero-shape { display: none; }
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 700px; }
     .hero h1 {
       font-family: var(--font-display);
-      font-size: clamp(4.5rem, 12vw, 11rem);
+      font-size: clamp(3.5rem, 10vw, 8rem);
       letter-spacing: 0.03em;
       line-height: 0.9;
+      margin-bottom: 12px;
+    }
+    .hero h2.hero-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
       margin-bottom: 28px;
+      font-weight: 400;
     }
     .hero-sub {
-      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
       color: var(--muted);
-      max-width: 550px;
+      max-width: 520px;
       margin: 0 auto 20px;
     }
     .hero-sub strong { color: var(--text); font-weight: 700; }
@@ -955,24 +1233,93 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero-glow"></div>
+
+    <!-- Floating design elements -->
+    <div class="hero-elements">
+      <!-- Browser mockup - left -->
+      <div class="hero-el hero-browser hero-float" style="--rot:-6deg;">
+        <div class="browser-bar">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-url">yoursite.com</span>
+        </div>
+        <div class="browser-body">
+          <div class="browser-line"></div>
+          <div class="browser-line"></div>
+          <div class="browser-line"></div>
+          <div class="browser-line"></div>
+          <div class="browser-block">
+            <div class="browser-rect"></div>
+            <div class="browser-rect"></div>
+            <div class="browser-rect"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code snippet - right -->
+      <div class="hero-el hero-code hero-float-delay" style="--rot:4deg;">
+        <span class="code-comment">&lt;!-- Your site --&gt;</span><br>
+        <span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-string">"hero"</span><span class="code-tag">&gt;</span><br>
+        &nbsp;&nbsp;<span class="code-tag">&lt;h1&gt;</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Welcome</span><br>
+        &nbsp;&nbsp;<span class="code-tag">&lt;/h1&gt;</span><br>
+        &nbsp;&nbsp;<span class="code-tag">&lt;button&gt;</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">Get Started</span><br>
+        &nbsp;&nbsp;<span class="code-tag">&lt;/button&gt;</span><br>
+        <span class="code-tag">&lt;/div&gt;</span>
+      </div>
+
+      <!-- Color palette - bottom left -->
+      <div class="hero-el hero-palette hero-float-slow" style="--rot:-3deg;">
+        <div class="swatch"></div>
+        <div class="swatch"></div>
+        <div class="swatch"></div>
+        <div class="swatch"></div>
+        <div class="swatch"></div>
+      </div>
+
+      <!-- Phone mockup - bottom right -->
+      <div class="hero-el hero-phone hero-float-fast" style="--rot:8deg;">
+        <div class="phone-notch"></div>
+        <div class="phone-line"></div>
+        <div class="phone-line"></div>
+        <div class="phone-line"></div>
+        <div class="phone-img"></div>
+        <div class="phone-btn"></div>
+      </div>
+
+      <!-- Geometric shapes -->
+      <div class="hero-shape circle-outline"></div>
+      <div class="hero-shape cross"></div>
+      <div class="hero-shape triangle"></div>
+      <div class="hero-shape dots">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
     <div class="hero-content">
       <div class="reveal" style="transition-delay: 0.1s;">
-        <h1>YOUR WEBSITE.<br><span class="gradient-text">DELIVERED.</span></h1>
+        <h2 class="hero-tagline">Web Design &amp; Development Agency</h2>
       </div>
-      <div class="reveal" style="transition-delay: 0.25s;">
-        <p class="hero-sub">
-          Professional websites for your business —<br>
-          starting at <strong>$300/month</strong>.
-        </p>
+      <div class="reveal" style="transition-delay: 0.2s;">
+        <h1>WE BUILD<br><span class="gradient-text">WEBSITES.</span></h1>
       </div>
       <div class="reveal" style="transition-delay: 0.35s;">
+        <p class="hero-sub">
+          Custom-designed, hand-coded websites for businesses that want to stand out — starting at <strong>$300/month</strong>.
+        </p>
+      </div>
+      <div class="reveal" style="transition-delay: 0.45s;">
         <div class="hero-contact">
           <a href="mailto:cameron@gwinndigital.com">cameron@gwinndigital.com</a>
           <span class="dot">&bull;</span>
           <a href="tel:+14697772518">(469) 777-2518</a>
         </div>
       </div>
-      <div class="reveal" style="transition-delay: 0.45s;">
+      <div class="reveal" style="transition-delay: 0.55s;">
         <a href="#contact" class="cta-btn magnetic">Get Started</a>
       </div>
     </div>
