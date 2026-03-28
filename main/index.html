@@ -820,102 +820,131 @@
       box-shadow: 0 10px 30px rgba(255,51,102,0.3);
     }
 
-    /* ── Eyes Section ── */
-    .eyes-section {
-      padding: 160px 0;
+    /* ── Portfolio Showcase ── */
+    .portfolio-section {
+      padding: 120px 0;
       text-align: center;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 48px;
+    }
+    @media (max-width: 768px) {
+      .portfolio-grid { grid-template-columns: 1fr; }
+    }
+    .portfolio-item {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
+      text-decoration: none;
+      color: var(--text);
+      display: block;
+    }
+    .portfolio-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+    .portfolio-preview {
+      aspect-ratio: 16/10;
       position: relative;
       overflow: hidden;
     }
-    .eyes-container {
+    .portfolio-preview .preview-browser {
+      position: absolute;
+      inset: 0;
       display: flex;
+      flex-direction: column;
+    }
+    .portfolio-preview .prev-bar {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 12px;
+      background: rgba(0,0,0,0.3);
+    }
+    .portfolio-preview .prev-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    .portfolio-preview .prev-dot:nth-child(1) { background: #ff5f57; }
+    .portfolio-preview .prev-dot:nth-child(2) { background: #ffbd2e; }
+    .portfolio-preview .prev-dot:nth-child(3) { background: #28c840; }
+    .portfolio-preview .prev-url {
+      flex: 1;
+      margin-left: 6px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 3px;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      padding: 0 6px;
+      font-size: 0.5rem;
+      color: var(--muted);
+    }
+    .portfolio-preview .prev-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 60px;
-      margin: 60px 0;
     }
-    .eye {
-      width: 160px;
-      height: 160px;
-      background: radial-gradient(circle, #fff 40%, #e8e8f0 60%, #ccc 100%);
-      border-radius: 50%;
-      position: relative;
-      box-shadow: 0 0 60px rgba(255,255,255,0.1), inset 0 0 30px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    .eye::before {
-      content: '';
-      position: absolute;
-      top: 10%;
-      left: 15%;
-      width: 30%;
-      height: 20%;
-      background: rgba(255,255,255,0.8);
-      border-radius: 50%;
-      filter: blur(4px);
-      z-index: 3;
-    }
-    .pupil {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transition: transform 0.08s ease-out;
-    }
-    .pupil .iris {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: radial-gradient(circle at 40% 40%, #3366ff 0%, #1a1a4e 50%, #0a0a2a 100%);
-      position: relative;
-    }
-    .eye:nth-child(2) .pupil .iris {
-      background: radial-gradient(circle at 40% 40%, #9933ff 0%, #2a1a4e 50%, #0a0a2a 100%);
-    }
-    .pupil .iris::after {
-      content: '';
-      width: 30px;
-      height: 30px;
-      background: #000;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    .pupil .iris .glint {
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      background: #fff;
-      border-radius: 50%;
-      top: 25%;
-      right: 25%;
-      z-index: 2;
-    }
-    .eyes-text {
+    .portfolio-item:nth-child(1) .prev-content { background: linear-gradient(135deg, rgba(255,51,102,0.15), rgba(255,102,51,0.1)); }
+    .portfolio-item:nth-child(2) .prev-content { background: linear-gradient(135deg, rgba(51,102,255,0.15), rgba(51,204,255,0.1)); }
+    .portfolio-item:nth-child(3) .prev-content { background: linear-gradient(135deg, rgba(153,51,255,0.15), rgba(255,51,204,0.1)); }
+    .prev-content .placeholder-text {
       font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      letter-spacing: 0.04em;
-      margin-top: 40px;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      opacity: 0.5;
     }
+    .portfolio-info {
+      padding: 20px 24px;
+    }
+    .portfolio-info h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .portfolio-info p {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .portfolio-info .visit-link {
+      display: inline-block;
+      margin-top: 12px;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--rainbow-1);
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+    .portfolio-info .visit-link:hover { opacity: 0.7; }
 
-    /* ── Morphing Blob Section ── */
+    /* ── Morph + Testimonials Section ── */
     .morph-section {
-      padding: 160px 0;
+      padding: 100px 0;
       position: relative;
       overflow: hidden;
     }
     .morph-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 60px;
       align-items: center;
     }
     @media (max-width: 768px) {
       .morph-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .morph-left {
+      position: relative;
     }
     .morph-blob-wrap {
       width: 100%;
@@ -924,16 +953,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      max-width: 320px;
+      margin: 0 auto;
     }
     .morph-blob {
-      width: 80%;
-      height: 80%;
+      width: 100%;
+      height: 100%;
       border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%;
       background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6), var(--rainbow-3));
       background-size: 300% 300%;
       animation: blobMorph 8s ease-in-out infinite, gradientShift 6s ease infinite;
-      filter: blur(0px);
-      opacity: 0.9;
+      opacity: 0.85;
     }
     @keyframes blobMorph {
       0% { border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%; }
@@ -942,18 +972,146 @@
       75% { border-radius: 60% 40% 45% 55% / 40% 60% 55% 45%; }
       100% { border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%; }
     }
-    .morph-text h2 {
+    .morph-right {
+      position: relative;
+    }
+    .morph-right h2 {
       font-family: var(--font-display);
-      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-size: clamp(2rem, 4vw, 3rem);
       letter-spacing: 0.04em;
       line-height: 1.05;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
     }
-    .morph-text p {
+    .morph-right > p {
       color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    /* Testimonial Carousel */
+    .testimonial-carousel {
+      position: relative;
+      min-height: 180px;
+    }
+    .testimonial-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .testimonial-slide.active { opacity: 1; }
+    .testimonial-quote {
       font-size: 1.05rem;
       line-height: 1.8;
+      color: var(--text);
+      font-style: italic;
       margin-bottom: 16px;
+      position: relative;
+      padding-left: 24px;
+      border-left: 3px solid var(--rainbow-1);
+    }
+    .testimonial-author {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+    }
+    .testimonial-role {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .testimonial-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .testimonial-dots .t-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .testimonial-dots .t-dot.active {
+      background: var(--rainbow-1);
+      transform: scale(1.3);
+    }
+
+    /* ── Spotlight Section ── */
+    .spotlight-section {
+      padding: 160px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    .spotlight-content {
+      position: relative;
+    }
+    .spotlight-text {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 10vw, 10rem);
+      letter-spacing: 0.04em;
+      line-height: 0.9;
+      color: var(--text);
+      opacity: 0.03;
+      transition: none;
+    }
+    .spotlight-text.revealed {
+      animation: spotlightReveal 1.5s ease forwards;
+    }
+    @keyframes spotlightReveal {
+      0% {
+        opacity: 0.03;
+        text-shadow: none;
+        filter: blur(8px);
+      }
+      30% {
+        opacity: 0.15;
+        filter: blur(4px);
+      }
+      60% {
+        opacity: 0.6;
+        filter: blur(1px);
+      }
+      100% {
+        opacity: 1;
+        filter: blur(0);
+        text-shadow: 0 0 80px rgba(255,51,102,0.3), 0 0 160px rgba(51,102,255,0.15);
+      }
+    }
+    .spotlight-sub {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-top: 16px;
+      opacity: 0;
+      transition: opacity 0.8s ease 1s;
+    }
+    .spotlight-text.revealed ~ .spotlight-sub {
+      opacity: 1;
+    }
+    .spotlight-beam {
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 500px;
+      background: radial-gradient(ellipse at top, rgba(255,255,255,0.06), transparent 70%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .spotlight-text.revealed ~ .spotlight-beam,
+    .spotlight-beam.on {
+      opacity: 1;
     }
 
     /* ── Horizontal Scroll Showcase ── */
@@ -1108,39 +1266,7 @@
       position: relative;
     }
 
-    /* ── Number Counter ── */
-    .stats-section {
-      padding: 100px 0;
-      background: var(--surface);
-      border-top: 1px solid rgba(255,255,255,0.04);
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 32px;
-      text-align: center;
-    }
-    @media (max-width: 768px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    .stat-item .stat-number {
-      font-family: var(--font-display);
-      font-size: clamp(3rem, 6vw, 4.5rem);
-      letter-spacing: 0.02em;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-    .stat-item:nth-child(1) .stat-number { color: var(--rainbow-1); }
-    .stat-item:nth-child(2) .stat-number { color: var(--rainbow-3); }
-    .stat-item:nth-child(3) .stat-number { color: var(--rainbow-5); }
-    .stat-item:nth-child(4) .stat-number { color: var(--rainbow-6); }
-    .stat-item .stat-label {
-      color: var(--muted);
-      font-size: 0.85rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
+    /* (stats section removed — replaced by spotlight) */
 
     /* ── CTA Footer ── */
     .cta-footer {
@@ -1385,25 +1511,63 @@
     </div>
   </section>
 
-  <!-- Eyes Section -->
-  <section class="eyes-section" id="work">
+  <!-- Portfolio Showcase -->
+  <section class="portfolio-section" id="work">
     <div class="container">
       <div class="reveal">
-        <p class="section-label">We See Everything</p>
+        <p class="section-label">Our Work</p>
+        <h2 class="section-title">Check Out Some of Our Sites</h2>
       </div>
-      <div class="eyes-container reveal-scale">
-        <div class="eye" id="eye1">
-          <div class="pupil" id="pupil1">
-            <div class="iris"><div class="glint"></div></div>
+      <div class="portfolio-grid">
+        <a href="#" class="portfolio-item reveal" style="transition-delay: 0.1s;">
+          <div class="portfolio-preview">
+            <div class="preview-browser">
+              <div class="prev-bar">
+                <span class="prev-dot"></span><span class="prev-dot"></span><span class="prev-dot"></span>
+                <span class="prev-url">client-site-1.com</span>
+              </div>
+              <div class="prev-content"><span class="placeholder-text">COMING SOON</span></div>
+            </div>
           </div>
-        </div>
-        <div class="eye" id="eye2">
-          <div class="pupil" id="pupil2">
-            <div class="iris"><div class="glint"></div></div>
+          <div class="portfolio-info">
+            <h3>Client Project 1</h3>
+            <p>Industry &bull; Website Type</p>
+            <span class="visit-link">Visit Site &rarr;</span>
           </div>
-        </div>
+        </a>
+        <a href="#" class="portfolio-item reveal" style="transition-delay: 0.2s;">
+          <div class="portfolio-preview">
+            <div class="preview-browser">
+              <div class="prev-bar">
+                <span class="prev-dot"></span><span class="prev-dot"></span><span class="prev-dot"></span>
+                <span class="prev-url">client-site-2.com</span>
+              </div>
+              <div class="prev-content"><span class="placeholder-text">COMING SOON</span></div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <h3>Client Project 2</h3>
+            <p>Industry &bull; Website Type</p>
+            <span class="visit-link">Visit Site &rarr;</span>
+          </div>
+        </a>
+        <a href="#" class="portfolio-item reveal" style="transition-delay: 0.3s;">
+          <div class="portfolio-preview">
+            <div class="preview-browser">
+              <div class="prev-bar">
+                <span class="prev-dot"></span><span class="prev-dot"></span><span class="prev-dot"></span>
+                <span class="prev-url">client-site-3.com</span>
+              </div>
+              <div class="prev-content"><span class="placeholder-text">COMING SOON</span></div>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <h3>Client Project 3</h3>
+            <p>Industry &bull; Website Type</p>
+            <span class="visit-link">Visit Site &rarr;</span>
+          </div>
+        </a>
       </div>
-      <p class="eyes-text reveal">Every pixel. Every detail. <span class="gradient-text">We're watching.</span></p>
     </div>
   </section>
 
@@ -1413,18 +1577,48 @@
     <div class="parallax-line" id="parallax2">WEBSITES &bull; APPS &bull; BRANDS &bull; WEBSITES &bull; APPS &bull; BRANDS &bull; WEBSITES &bull; APPS &bull; BRANDS &bull;</div>
   </div>
 
-  <!-- Morphing Blob -->
+  <!-- Morph + Testimonials -->
   <section class="morph-section">
     <div class="container">
       <div class="morph-grid">
-        <div class="morph-blob-wrap reveal-left">
-          <div class="morph-blob"></div>
+        <div class="morph-left reveal-left">
+          <div class="morph-blob-wrap">
+            <div class="morph-blob"></div>
+          </div>
         </div>
-        <div class="morph-text reveal-right">
+        <div class="morph-right reveal-right">
           <p class="section-label">Our Approach</p>
           <h2>Design That <span class="gradient-text">Moves.</span></h2>
-          <p>We don't build static pages. We build experiences. Every interaction is crafted to engage, impress, and convert your visitors into customers.</p>
-          <p>From scroll-triggered animations to interactive elements — your website won't just look good, it'll feel alive.</p>
+          <p>We build experiences — not static pages. Your website will feel alive.</p>
+
+          <div class="testimonial-carousel" id="testimonialCarousel">
+            <div class="testimonial-slide active">
+              <p class="testimonial-quote">"Gwinn Digital completely transformed our online presence. The site they built is stunning and our customers love it."</p>
+              <p class="testimonial-author">Jane Smith</p>
+              <p class="testimonial-role">Owner, Placeholder Business</p>
+            </div>
+            <div class="testimonial-slide">
+              <p class="testimonial-quote">"From concept to launch in under a week. I couldn't believe how fast and professional the entire process was."</p>
+              <p class="testimonial-author">Mike Johnson</p>
+              <p class="testimonial-role">CEO, Placeholder Company</p>
+            </div>
+            <div class="testimonial-slide">
+              <p class="testimonial-quote">"The animations and interactions on our site blow everyone away. We get compliments on our website constantly."</p>
+              <p class="testimonial-author">Sarah Williams</p>
+              <p class="testimonial-role">Marketing Director, Placeholder Corp</p>
+            </div>
+            <div class="testimonial-slide">
+              <p class="testimonial-quote">"Best investment we've made for our business. The ongoing support means we never have to worry about our website."</p>
+              <p class="testimonial-author">David Chen</p>
+              <p class="testimonial-role">Founder, Placeholder Studio</p>
+            </div>
+          </div>
+          <div class="testimonial-dots" id="testimonialDots">
+            <span class="t-dot active" data-index="0"></span>
+            <span class="t-dot" data-index="1"></span>
+            <span class="t-dot" data-index="2"></span>
+            <span class="t-dot" data-index="3"></span>
+          </div>
         </div>
       </div>
     </div>
@@ -1453,27 +1647,12 @@
     </div>
   </section>
 
-  <!-- Stats Counter -->
-  <section class="stats-section">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat-item reveal">
-          <div class="stat-number" data-target="50">0</div>
-          <div class="stat-label">Projects Delivered</div>
-        </div>
-        <div class="stat-item reveal" style="transition-delay: 0.1s;">
-          <div class="stat-number" data-target="100">0</div>
-          <div class="stat-label">Client Satisfaction %</div>
-        </div>
-        <div class="stat-item reveal" style="transition-delay: 0.2s;">
-          <div class="stat-number" data-target="7">0</div>
-          <div class="stat-label">Day Avg Delivery</div>
-        </div>
-        <div class="stat-item reveal" style="transition-delay: 0.3s;">
-          <div class="stat-number" data-target="24">0</div>
-          <div class="stat-label">/ 7 Support</div>
-        </div>
-      </div>
+  <!-- Spotlight: 5 Day Delivery -->
+  <section class="spotlight-section" id="spotlightSection">
+    <div class="spotlight-beam" id="spotlightBeam"></div>
+    <div class="spotlight-content">
+      <div class="spotlight-text" id="spotlightText">5 DAY<br>DELIVERY</div>
+      <p class="spotlight-sub">Average turnaround from kickoff to launch</p>
     </div>
   </section>
 
@@ -1605,27 +1784,50 @@
       els.forEach(function(el) { obs.observe(el); });
     })();
 
-    // ── Eyes Follow Cursor ──
+    // ── Testimonial Carousel ──
     (function() {
-      var eyes = [
-        { eye: document.getElementById('eye1'), pupil: document.getElementById('pupil1') },
-        { eye: document.getElementById('eye2'), pupil: document.getElementById('pupil2') }
-      ];
+      var slides = document.querySelectorAll('.testimonial-slide');
+      var dots = document.querySelectorAll('.t-dot');
+      var current = 0;
+      var total = slides.length;
 
-      document.addEventListener('mousemove', function(e) {
-        eyes.forEach(function(obj) {
-          var rect = obj.eye.getBoundingClientRect();
-          var cx = rect.left + rect.width / 2;
-          var cy = rect.top + rect.height / 2;
-          var dx = e.clientX - cx;
-          var dy = e.clientY - cy;
-          var dist = Math.sqrt(dx * dx + dy * dy);
-          var maxMove = 30;
-          var moveX = (dx / dist) * Math.min(dist * 0.1, maxMove);
-          var moveY = (dy / dist) * Math.min(dist * 0.1, maxMove);
-          obj.pupil.style.transform = 'translate(calc(-50% + ' + moveX + 'px), calc(-50% + ' + moveY + 'px))';
+      function showSlide(index) {
+        slides.forEach(function(s) { s.classList.remove('active'); });
+        dots.forEach(function(d) { d.classList.remove('active'); });
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        current = index;
+      }
+
+      // Auto-rotate every 5s
+      setInterval(function() {
+        showSlide((current + 1) % total);
+      }, 5000);
+
+      // Click dots
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          showSlide(parseInt(this.getAttribute('data-index')));
         });
       });
+    })();
+
+    // ── Spotlight Reveal on Scroll ──
+    (function() {
+      var text = document.getElementById('spotlightText');
+      var beam = document.getElementById('spotlightBeam');
+      if (!text) return;
+
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            text.classList.add('revealed');
+            beam.classList.add('on');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      obs.observe(text);
     })();
 
     // ── Parallax Text on Scroll ──
@@ -1664,32 +1866,7 @@
       });
     })();
 
-    // ── Number Counter ──
-    (function() {
-      var counters = document.querySelectorAll('.stat-number[data-target]');
-      var counted = new Set();
-
-      var obs = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting && !counted.has(entry.target)) {
-            counted.add(entry.target);
-            var target = parseInt(entry.target.getAttribute('data-target'));
-            var current = 0;
-            var step = Math.max(1, Math.floor(target / 60));
-            var timer = setInterval(function() {
-              current += step;
-              if (current >= target) {
-                current = target;
-                clearInterval(timer);
-              }
-              entry.target.textContent = current + (target === 100 ? '%' : '+');
-            }, 30);
-          }
-        });
-      }, { threshold: 0.5 });
-
-      counters.forEach(function(c) { obs.observe(c); });
-    })();
+    // (number counter removed)
 
     // ── Magnetic Buttons ──
     (function() {
