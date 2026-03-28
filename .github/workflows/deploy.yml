@@ -46,7 +46,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./main/
-          server-dir: /public_html/
+          server-dir: /
           exclude: |
             **/proposal1/**
             **/proposal2/**
@@ -67,7 +67,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./proposal1/
-          server-dir: /public_html/proposal1/
+          server-dir: /proposal1/
 
   deploy-proposal2:
     needs: detect-changes
@@ -82,7 +82,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./proposal2/
-          server-dir: /public_html/proposal2/
+          server-dir: /proposal2/
 
   deploy-proposal3:
     needs: detect-changes
@@ -97,7 +97,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./proposal3/
-          server-dir: /public_html/proposal3/
+          server-dir: /proposal3/
 
   deploy-proposal4:
     needs: detect-changes
@@ -112,7 +112,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./proposal4/
-          server-dir: /public_html/proposal4/
+          server-dir: /proposal4/
 
   deploy-proposal5:
     needs: detect-changes
@@ -127,4 +127,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./proposal5/
-          server-dir: /public_html/proposal5/
+          server-dir: /proposal5/
