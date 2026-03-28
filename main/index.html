@@ -5,17 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gwinn Digital — Your Website. Delivered.</title>
   <meta name="description" content="Professional websites for your business — starting at $300/month. Custom design, fast delivery, ongoing support.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23ff3366'/><stop offset='50%25' stop-color='%233366ff'/><stop offset='100%25' stop-color='%239933ff'/></linearGradient></defs><rect width='32' height='32' rx='6' fill='%230a0a0f'/><text x='4' y='23' font-family='Arial Black' font-weight='900' font-size='18' fill='url(%23g)'>G</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --bg: #0a0a0f;
       --surface: #111118;
+      --surface2: #16161f;
       --text: #f0f0f5;
       --muted: #8888aa;
+      --accent: #ff3366;
       --rainbow-1: #ff3366;
       --rainbow-2: #ff6633;
       --rainbow-3: #ffcc00;
@@ -35,9 +38,44 @@
       color: var(--text);
       overflow-x: hidden;
       line-height: 1.6;
+      cursor: none;
     }
 
-    /* ── Rainbow Bubbles ── */
+    /* ── Custom Cursor ── */
+    .cursor-dot {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: #fff;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: width 0.3s, height 0.3s, border-color 0.3s;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring.hovering {
+      width: 60px;
+      height: 60px;
+      border-color: var(--rainbow-1);
+    }
+
+    @media (max-width: 768px) {
+      body { cursor: auto; }
+      .cursor-dot, .cursor-ring { display: none; }
+    }
+
+    /* ── Bubbles ── */
     .bubbles-container {
       position: fixed;
       inset: 0;
@@ -45,36 +83,29 @@
       z-index: 0;
       overflow: hidden;
     }
-
     .bubble {
       position: absolute;
       border-radius: 50%;
-      opacity: 0.12;
-      filter: blur(60px);
+      opacity: 0.08;
+      filter: blur(80px);
       animation: float linear infinite;
     }
-
     @keyframes float {
       0% { transform: translateY(110vh) translateX(0) scale(1); }
-      25% { transform: translateY(80vh) translateX(40px) scale(1.05); }
-      50% { transform: translateY(50vh) translateX(-30px) scale(0.95); }
-      75% { transform: translateY(20vh) translateX(50px) scale(1.08); }
-      100% { transform: translateY(-20vh) translateX(-20px) scale(1); }
+      25% { transform: translateY(75vh) translateX(60px) scale(1.1); }
+      50% { transform: translateY(40vh) translateX(-40px) scale(0.9); }
+      75% { transform: translateY(10vh) translateX(80px) scale(1.15); }
+      100% { transform: translateY(-20vh) translateX(-30px) scale(1); }
     }
 
     /* ── Shared ── */
     section { position: relative; z-index: 1; }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
     .section-label {
       font-family: var(--font-display);
-      font-size: clamp(0.9rem, 1.2vw, 1rem);
-      letter-spacing: 0.25em;
+      font-size: 1rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-3), var(--rainbow-5), var(--rainbow-7));
       -webkit-background-clip: text;
@@ -82,25 +113,88 @@
       background-clip: text;
       margin-bottom: 12px;
     }
-
     .section-title {
       font-family: var(--font-display);
-      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-size: clamp(2.8rem, 6vw, 5rem);
       letter-spacing: 0.04em;
-      line-height: 1.1;
-      margin-bottom: 20px;
+      line-height: 1.05;
+      margin-bottom: 24px;
     }
 
-    /* ── Fade-in on scroll ── */
-    .fade-in {
+    /* ── Fade/Slide Animations ── */
+    .reveal {
       opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(60px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .fade-in.visible {
+    .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-80px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(80px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3), var(--rainbow-4), var(--rainbow-5), var(--rainbow-6), var(--rainbow-7));
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s ease infinite;
+    }
+
+    /* ── Top Bar ── */
+    .top-bar {
+      background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6));
+      background-size: 200% 100%;
+      animation: gradientShift 6s linear infinite;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #fff;
+      position: relative;
+      z-index: 101;
+    }
+    .top-bar a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 16px;
+      transition: opacity 0.3s;
+    }
+    .top-bar a:hover { opacity: 0.8; }
+    .top-bar .separator { opacity: 0.4; margin: 0 8px; }
 
     /* ── Nav ── */
     nav {
@@ -109,31 +203,48 @@
       left: 0;
       right: 0;
       z-index: 100;
-      padding: 20px 0;
-      background: rgba(10, 10, 15, 0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 16px 0;
+      background: rgba(10, 10, 15, 0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: top 0.3s;
     }
-
-    nav .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+    nav.scrolled { top: 0; }
+    nav .container { display: flex; align-items: center; justify-content: space-between; }
 
     .nav-logo {
       font-family: var(--font-display);
       font-size: 1.8rem;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo .logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: #fff;
+    }
+    .nav-logo .logo-gwinn {
       background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-3), var(--rainbow-5));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-decoration: none;
+    }
+    .nav-logo .logo-digital {
+      color: #fff;
+      -webkit-text-fill-color: #fff;
     }
 
     .nav-links { display: flex; gap: 32px; list-style: none; }
-
     .nav-links a {
       color: var(--muted);
       text-decoration: none;
@@ -141,37 +252,30 @@
       font-weight: 500;
       letter-spacing: 0.04em;
       transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--rainbow-1);
+      transition: width 0.3s;
     }
     .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
 
-    .nav-toggle {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-    }
-    .nav-toggle span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--text);
-      margin: 6px 0;
-      transition: 0.3s;
-    }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--text); margin: 6px 0; transition: 0.3s; }
 
     @media (max-width: 768px) {
       .nav-toggle { display: block; }
       .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: rgba(10,10,15,0.97);
-        flex-direction: column;
-        padding: 24px;
-        gap: 20px;
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        background: rgba(10,10,15,0.97); flex-direction: column;
+        padding: 24px; gap: 20px;
         border-bottom: 1px solid rgba(255,255,255,0.05);
       }
       .nav-links.open { display: flex; }
@@ -184,66 +288,59 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 120px 24px 80px;
+      padding: 140px 24px 80px;
       position: relative;
     }
-
     .hero-glow {
       position: absolute;
-      top: 30%;
+      top: 35%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 700px;
-      height: 500px;
-      background: radial-gradient(ellipse, rgba(255,51,102,0.15), rgba(51,102,255,0.1), transparent 70%);
-      filter: blur(80px);
+      width: 900px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(255,51,102,0.12), rgba(51,102,255,0.08), transparent 70%);
+      filter: blur(100px);
       pointer-events: none;
     }
-
     .hero-content { position: relative; z-index: 2; }
-
     .hero h1 {
       font-family: var(--font-display);
-      font-size: clamp(4rem, 10vw, 9rem);
-      letter-spacing: 0.04em;
-      line-height: 0.95;
-      margin-bottom: 24px;
+      font-size: clamp(4.5rem, 12vw, 11rem);
+      letter-spacing: 0.03em;
+      line-height: 0.9;
+      margin-bottom: 28px;
     }
-
-    .hero h1 .gradient-word {
-      background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3), var(--rainbow-4), var(--rainbow-5), var(--rainbow-6), var(--rainbow-7));
-      background-size: 300% 300%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: gradientShift 4s ease infinite;
-    }
-
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
     .hero-sub {
       font-size: clamp(1.1rem, 2vw, 1.4rem);
       color: var(--muted);
-      max-width: 600px;
-      margin: 0 auto 40px;
-      font-weight: 400;
+      max-width: 550px;
+      margin: 0 auto 20px;
     }
+    .hero-sub strong { color: var(--text); font-weight: 700; }
 
-    .hero-sub strong {
-      color: var(--text);
-      font-weight: 600;
+    .hero-contact {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      font-size: 0.95rem;
     }
+    .hero-contact a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .hero-contact a:hover { color: var(--text); }
+    .hero-contact .dot { color: var(--rainbow-1); }
 
     .cta-btn {
       display: inline-block;
-      padding: 18px 48px;
+      padding: 20px 56px;
       font-family: var(--font-display);
-      font-size: 1.3rem;
-      letter-spacing: 0.12em;
+      font-size: 1.4rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: #fff;
       text-decoration: none;
@@ -251,188 +348,540 @@
       background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6));
       background-size: 200% 200%;
       animation: gradientShift 3s ease infinite;
-      box-shadow: 0 0 40px rgba(255,51,102,0.3), 0 0 80px rgba(51,102,255,0.15);
+      box-shadow: 0 0 50px rgba(255,51,102,0.3), 0 0 100px rgba(51,102,255,0.15);
       transition: transform 0.3s, box-shadow 0.3s;
       position: relative;
       overflow: hidden;
     }
-
     .cta-btn::before {
       content: '';
       position: absolute;
-      inset: -2px;
-      border-radius: 62px;
+      inset: -3px;
+      border-radius: 63px;
       background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-3), var(--rainbow-5), var(--rainbow-7));
       background-size: 300% 300%;
       animation: gradientShift 3s ease infinite;
       z-index: -1;
-      filter: blur(12px);
-      opacity: 0.6;
+      filter: blur(16px);
+      opacity: 0.5;
     }
-
     .cta-btn:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 0 60px rgba(255,51,102,0.4), 0 0 120px rgba(51,102,255,0.2);
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 0 80px rgba(255,51,102,0.5), 0 0 160px rgba(51,102,255,0.25);
     }
-
-    /* Pulse ring */
     .cta-btn::after {
       content: '';
       position: absolute;
-      inset: -4px;
-      border-radius: 64px;
-      border: 2px solid rgba(255,255,255,0.2);
-      animation: pulse-ring 2s ease-out infinite;
+      inset: -5px;
+      border-radius: 65px;
+      border: 2px solid rgba(255,255,255,0.15);
+      animation: pulse-ring 2.5s ease-out infinite;
     }
-
     @keyframes pulse-ring {
-      0% { transform: scale(1); opacity: 0.6; }
-      100% { transform: scale(1.15); opacity: 0; }
+      0% { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(1.2); opacity: 0; }
     }
 
-    /* ── Proposals ── */
-    .proposals { padding: 120px 0; }
+    /* ── Scroll Indicator ── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: bob 2s ease-in-out infinite;
+    }
+    .scroll-indicator .mouse {
+      width: 24px;
+      height: 38px;
+      border: 2px solid var(--muted);
+      border-radius: 12px;
+      position: relative;
+    }
+    .scroll-indicator .mouse::after {
+      content: '';
+      width: 4px;
+      height: 8px;
+      background: var(--rainbow-1);
+      border-radius: 2px;
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: scroll-dot 2s ease-in-out infinite;
+    }
+    @keyframes scroll-dot {
+      0%, 100% { top: 6px; opacity: 1; }
+      50% { top: 22px; opacity: 0.3; }
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
 
-    .proposals-grid {
+    /* ── Pricing ── */
+    .pricing {
+      padding: 120px 0;
+      position: relative;
+    }
+    .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
       margin-top: 48px;
     }
-
-    .proposal-card {
-      position: relative;
-      border-radius: 16px;
-      padding: 40px 24px;
-      text-align: center;
-      text-decoration: none;
-      color: var(--text);
-      overflow: hidden;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    .price-card {
+      background: var(--surface);
       border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 48px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
     }
-
-    .proposal-card::before {
-      content: '';
+    .price-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+    .price-card.featured {
+      border-color: var(--rainbow-1);
+      background: linear-gradient(160deg, rgba(255,51,102,0.08), var(--surface) 40%);
+    }
+    .price-card.featured::before {
+      content: 'MOST POPULAR';
       position: absolute;
-      inset: 0;
-      opacity: 0.12;
-      transition: opacity 0.4s;
+      top: 16px;
+      right: -32px;
+      background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-6));
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      padding: 6px 40px;
+      transform: rotate(45deg);
     }
-
-    .proposal-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    .price-tag {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
     }
-    .proposal-card:hover::before { opacity: 0.22; }
-
-    .proposal-card:nth-child(1)::before { background: linear-gradient(135deg, #ff3366, #ff6633); }
-    .proposal-card:nth-child(2)::before { background: linear-gradient(135deg, #ff6633, #ffcc00); }
-    .proposal-card:nth-child(3)::before { background: linear-gradient(135deg, #33ff66, #33ccff); }
-    .proposal-card:nth-child(4)::before { background: linear-gradient(135deg, #3366ff, #9933ff); }
-    .proposal-card:nth-child(5)::before { background: linear-gradient(135deg, #9933ff, #ff33cc); }
-
-    .proposal-card .card-number {
+    .price-card.featured .price-tag { color: var(--rainbow-1); }
+    .price-name {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .price-amount {
       font-family: var(--font-display);
       font-size: 3.5rem;
-      line-height: 1;
-      margin-bottom: 8px;
-      position: relative;
+      margin-bottom: 4px;
     }
-
-    .proposal-card:nth-child(1) .card-number { color: var(--rainbow-1); }
-    .proposal-card:nth-child(2) .card-number { color: var(--rainbow-2); }
-    .proposal-card:nth-child(3) .card-number { color: var(--rainbow-4); }
-    .proposal-card:nth-child(4) .card-number { color: var(--rainbow-5); }
-    .proposal-card:nth-child(5) .card-number { color: var(--rainbow-6); }
-
-    .proposal-card .card-label {
+    .price-amount .currency { font-size: 1.5rem; vertical-align: top; line-height: 2; }
+    .price-amount .period { font-size: 1rem; color: var(--muted); }
+    .price-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+    .price-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+    .price-features li {
+      padding: 8px 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .price-features li .check {
+      color: var(--rainbow-4);
+      font-weight: bold;
+    }
+    .price-btn {
+      display: block;
+      text-align: center;
+      padding: 14px;
+      border-radius: 12px;
       font-family: var(--font-display);
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      position: relative;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .price-btn.outline {
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--text);
+    }
+    .price-btn.outline:hover {
+      border-color: var(--rainbow-1);
+      background: rgba(255,51,102,0.08);
+    }
+    .price-btn.filled {
+      background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-6));
+      color: #fff;
+      border: none;
+    }
+    .price-btn.filled:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255,51,102,0.3);
     }
 
-    .proposal-card .card-status {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 12px;
+    /* ── Eyes Section ── */
+    .eyes-section {
+      padding: 160px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .eyes-container {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin: 60px 0;
+    }
+    .eye {
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, #fff 40%, #e8e8f0 60%, #ccc 100%);
+      border-radius: 50%;
+      position: relative;
+      box-shadow: 0 0 60px rgba(255,255,255,0.1), inset 0 0 30px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .eye::before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 15%;
+      width: 30%;
+      height: 20%;
+      background: rgba(255,255,255,0.8);
+      border-radius: 50%;
+      filter: blur(4px);
+      z-index: 3;
+    }
+    .pupil {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease-out;
+    }
+    .pupil .iris {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #3366ff 0%, #1a1a4e 50%, #0a0a2a 100%);
       position: relative;
     }
+    .eye:nth-child(2) .pupil .iris {
+      background: radial-gradient(circle at 40% 40%, #9933ff 0%, #2a1a4e 50%, #0a0a2a 100%);
+    }
+    .pupil .iris::after {
+      content: '';
+      width: 30px;
+      height: 30px;
+      background: #000;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .pupil .iris .glint {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      top: 25%;
+      right: 25%;
+      z-index: 2;
+    }
+    .eyes-text {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      letter-spacing: 0.04em;
+      margin-top: 40px;
+    }
 
-    /* ── Why Section ── */
-    .why { padding: 120px 0; }
-
-    .why-grid {
+    /* ── Morphing Blob Section ── */
+    .morph-section {
+      padding: 160px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .morph-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 32px;
-      margin-top: 48px;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
     }
-
-    .why-card {
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 16px;
-      padding: 40px 32px;
-      transition: transform 0.3s, border-color 0.3s;
+    @media (max-width: 768px) {
+      .morph-grid { grid-template-columns: 1fr; gap: 40px; }
     }
-
-    .why-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255,255,255,0.12);
-    }
-
-    .why-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
+    .morph-blob-wrap {
+      width: 100%;
+      aspect-ratio: 1;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
+    }
+    .morph-blob {
+      width: 80%;
+      height: 80%;
+      border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%;
+      background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6), var(--rainbow-3));
+      background-size: 300% 300%;
+      animation: blobMorph 8s ease-in-out infinite, gradientShift 6s ease infinite;
+      filter: blur(0px);
+      opacity: 0.9;
+    }
+    @keyframes blobMorph {
+      0% { border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%; }
+      25% { border-radius: 55% 45% 40% 60% / 45% 55% 45% 55%; }
+      50% { border-radius: 45% 55% 60% 40% / 60% 45% 40% 60%; }
+      75% { border-radius: 60% 40% 45% 55% / 40% 60% 55% 45%; }
+      100% { border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%; }
+    }
+    .morph-text h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: 0.04em;
+      line-height: 1.05;
       margin-bottom: 20px;
     }
+    .morph-text p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
 
-    .why-card:nth-child(1) .why-icon { background: rgba(255,51,102,0.15); }
-    .why-card:nth-child(2) .why-icon { background: rgba(255,204,0,0.15); }
-    .why-card:nth-child(3) .why-icon { background: rgba(51,102,255,0.15); }
-    .why-card:nth-child(4) .why-icon { background: rgba(153,51,255,0.15); }
-
-    .why-card h3 {
+    /* ── Horizontal Scroll Showcase ── */
+    .showcase {
+      padding: 120px 0 60px;
+      overflow: hidden;
+    }
+    .showcase-track {
+      display: flex;
+      gap: 24px;
+      animation: scrollTrack 30s linear infinite;
+      width: max-content;
+    }
+    .showcase-track:hover { animation-play-state: paused; }
+    @keyframes scrollTrack {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .showcase-card {
+      width: 320px;
+      height: 220px;
+      border-radius: 16px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .showcase-card .card-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.15;
+    }
+    .showcase-card:nth-child(1) .card-bg,
+    .showcase-card:nth-child(7) .card-bg { background: linear-gradient(135deg, #ff3366, #ff6633); }
+    .showcase-card:nth-child(2) .card-bg,
+    .showcase-card:nth-child(8) .card-bg { background: linear-gradient(135deg, #3366ff, #33ccff); }
+    .showcase-card:nth-child(3) .card-bg,
+    .showcase-card:nth-child(9) .card-bg { background: linear-gradient(135deg, #9933ff, #ff33cc); }
+    .showcase-card:nth-child(4) .card-bg,
+    .showcase-card:nth-child(10) .card-bg { background: linear-gradient(135deg, #ffcc00, #ff6633); }
+    .showcase-card:nth-child(5) .card-bg,
+    .showcase-card:nth-child(11) .card-bg { background: linear-gradient(135deg, #33ff66, #3366ff); }
+    .showcase-card:nth-child(6) .card-bg,
+    .showcase-card:nth-child(12) .card-bg { background: linear-gradient(135deg, #ff33cc, #3366ff); }
+    .showcase-card-content {
+      position: relative;
+      z-index: 1;
+      padding: 32px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .showcase-card-content h3 {
       font-family: var(--font-display);
       font-size: 1.5rem;
       letter-spacing: 0.04em;
-      margin-bottom: 12px;
+      margin-bottom: 4px;
+    }
+    .showcase-card-content p {
+      font-size: 0.8rem;
+      color: var(--muted);
     }
 
-    .why-card p {
+    /* ── Parallax Text ── */
+    .parallax-text-section {
+      padding: 80px 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .parallax-line {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 10vw, 8rem);
+      white-space: nowrap;
+      color: rgba(255,255,255,0.03);
+      letter-spacing: 0.05em;
+      line-height: 1.1;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.06);
+    }
+    .parallax-line:nth-child(2) {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,51,102,0.15);
+    }
+
+    /* ── Interactive Tilt Cards ── */
+    .tilt-section {
+      padding: 120px 0;
+    }
+    .tilt-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      margin-top: 48px;
+    }
+    .tilt-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 20px;
+      padding: 48px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+      transform-style: preserve-3d;
+      perspective: 800px;
+    }
+    .tilt-card:hover {
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .tilt-card .card-glow {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+    .tilt-card:hover .card-glow { opacity: 0.15; }
+    .tilt-card:nth-child(1) .card-glow { background: var(--rainbow-1); }
+    .tilt-card:nth-child(2) .card-glow { background: var(--rainbow-3); }
+    .tilt-card:nth-child(3) .card-glow { background: var(--rainbow-5); }
+    .tilt-card:nth-child(4) .card-glow { background: var(--rainbow-6); }
+
+    .tilt-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .tilt-card:nth-child(1) .tilt-icon { background: rgba(255,51,102,0.12); }
+    .tilt-card:nth-child(2) .tilt-icon { background: rgba(255,204,0,0.12); }
+    .tilt-card:nth-child(3) .tilt-icon { background: rgba(51,102,255,0.12); }
+    .tilt-card:nth-child(4) .tilt-icon { background: rgba(153,51,255,0.12); }
+
+    .tilt-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .tilt-card p {
       color: var(--muted);
       font-size: 0.95rem;
       line-height: 1.7;
+      position: relative;
+    }
+
+    /* ── Number Counter ── */
+    .stats-section {
+      padding: 100px 0;
+      background: var(--surface);
+      border-top: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      text-align: center;
+    }
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .stat-item .stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 4.5rem);
+      letter-spacing: 0.02em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-item:nth-child(1) .stat-number { color: var(--rainbow-1); }
+    .stat-item:nth-child(2) .stat-number { color: var(--rainbow-3); }
+    .stat-item:nth-child(3) .stat-number { color: var(--rainbow-5); }
+    .stat-item:nth-child(4) .stat-number { color: var(--rainbow-6); }
+    .stat-item .stat-label {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
 
     /* ── CTA Footer ── */
     .cta-footer {
-      padding: 120px 0 60px;
+      padding: 160px 0 80px;
       text-align: center;
+      position: relative;
     }
-
     .cta-footer h2 {
       font-family: var(--font-display);
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-size: clamp(3rem, 6vw, 5.5rem);
       letter-spacing: 0.04em;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
-
     .cta-footer p {
       color: var(--muted);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       max-width: 500px;
-      margin: 0 auto 40px;
+      margin: 0 auto 48px;
     }
-
     .contact-row {
       display: flex;
       align-items: center;
@@ -441,7 +890,6 @@
       flex-wrap: wrap;
       margin-top: 48px;
     }
-
     .contact-link {
       color: var(--muted);
       text-decoration: none;
@@ -450,39 +898,56 @@
     }
     .contact-link:hover { color: var(--text); }
 
-    /* ── Bottom Bar ── */
-    .bottom-bar {
-      border-top: 1px solid rgba(255,255,255,0.05);
-      padding: 24px 0;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
-
+    /* ── Footer ── */
     .rainbow-line {
       height: 3px;
       background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3), var(--rainbow-4), var(--rainbow-5), var(--rainbow-6), var(--rainbow-7));
       background-size: 200% 100%;
       animation: gradientShift 4s linear infinite;
     }
+    .bottom-bar {
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 28px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    /* ── Magnetic Button Effect ── */
+    .magnetic { transition: transform 0.2s ease-out; }
   </style>
 </head>
 <body>
 
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
   <!-- Rainbow Bubbles -->
   <div class="bubbles-container" id="bubbles"></div>
 
+  <!-- Top Contact Bar -->
+  <div class="top-bar">
+    <a href="mailto:cameron@gwinndigital.com">cameron@gwinndigital.com</a>
+    <span class="separator">|</span>
+    <a href="tel:+14697772518">(469) 777-2518</a>
+  </div>
+
   <!-- Nav -->
-  <nav>
+  <nav id="mainNav">
     <div class="container">
-      <a href="#" class="nav-logo">GWINN DIGITAL</a>
+      <a href="#" class="nav-logo magnetic">
+        <span class="logo-icon">G</span>
+        <span><span class="logo-gwinn">GWINN</span><span class="logo-digital">DIGITAL</span></span>
+      </a>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#proposals">Proposals</a></li>
-        <li><a href="#why">Why Us</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#pricing" class="magnetic">Pricing</a></li>
+        <li><a href="#work" class="magnetic">What We Do</a></li>
+        <li><a href="#why" class="magnetic">Why Us</a></li>
+        <li><a href="#contact" class="magnetic">Contact</a></li>
       </ul>
     </div>
   </nav>
@@ -491,94 +956,223 @@
   <section class="hero">
     <div class="hero-glow"></div>
     <div class="hero-content">
-      <h1>
-        YOUR WEBSITE.<br>
-        <span class="gradient-word">DELIVERED.</span>
-      </h1>
-      <p class="hero-sub">
-        Professional websites for your business —<br>
-        starting at <strong>$300/month</strong>.
-      </p>
-      <a href="#contact" class="cta-btn">Get Started</a>
+      <div class="reveal" style="transition-delay: 0.1s;">
+        <h1>YOUR WEBSITE.<br><span class="gradient-text">DELIVERED.</span></h1>
+      </div>
+      <div class="reveal" style="transition-delay: 0.25s;">
+        <p class="hero-sub">
+          Professional websites for your business —<br>
+          starting at <strong>$300/month</strong>.
+        </p>
+      </div>
+      <div class="reveal" style="transition-delay: 0.35s;">
+        <div class="hero-contact">
+          <a href="mailto:cameron@gwinndigital.com">cameron@gwinndigital.com</a>
+          <span class="dot">&bull;</span>
+          <a href="tel:+14697772518">(469) 777-2518</a>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay: 0.45s;">
+        <a href="#contact" class="cta-btn magnetic">Get Started</a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="mouse"></div>
+      SCROLL
     </div>
   </section>
 
-  <!-- Proposals -->
-  <section class="proposals" id="proposals">
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
     <div class="container">
-      <div class="fade-in">
-        <p class="section-label">Client Proposals</p>
-        <h2 class="section-title">Active Proposals</h2>
+      <div class="reveal" style="text-align:center;">
+        <p class="section-label">Pricing</p>
+        <h2 class="section-title">Simple, Transparent Plans</h2>
       </div>
-      <div class="proposals-grid">
-        <a href="https://proposal1.gwinndigital.com" class="proposal-card fade-in">
-          <div class="card-number">01</div>
-          <div class="card-label">Proposal 1</div>
-          <div class="card-status">View Proposal &rarr;</div>
-        </a>
-        <a href="https://proposal2.gwinndigital.com" class="proposal-card fade-in">
-          <div class="card-number">02</div>
-          <div class="card-label">Proposal 2</div>
-          <div class="card-status">View Proposal &rarr;</div>
-        </a>
-        <a href="https://proposal3.gwinndigital.com" class="proposal-card fade-in">
-          <div class="card-number">03</div>
-          <div class="card-label">Proposal 3</div>
-          <div class="card-status">View Proposal &rarr;</div>
-        </a>
-        <a href="https://proposal4.gwinndigital.com" class="proposal-card fade-in">
-          <div class="card-number">04</div>
-          <div class="card-label">Proposal 4</div>
-          <div class="card-status">View Proposal &rarr;</div>
-        </a>
-        <a href="https://proposal5.gwinndigital.com" class="proposal-card fade-in">
-          <div class="card-number">05</div>
-          <div class="card-label">Proposal 5</div>
-          <div class="card-status">View Proposal &rarr;</div>
-        </a>
+      <div class="pricing-grid">
+        <div class="price-card reveal" style="transition-delay: 0.1s;">
+          <p class="price-tag">Starter</p>
+          <h3 class="price-name">Launch</h3>
+          <p class="price-amount"><span class="currency">$</span>300<span class="period">/mo</span></p>
+          <p class="price-desc">Perfect for small businesses that need a professional online presence — fast.</p>
+          <ul class="price-features">
+            <li><span class="check">&#10003;</span> Custom single-page site</li>
+            <li><span class="check">&#10003;</span> Mobile responsive</li>
+            <li><span class="check">&#10003;</span> Basic SEO setup</li>
+            <li><span class="check">&#10003;</span> Monthly updates included</li>
+            <li><span class="check">&#10003;</span> Hosting included</li>
+          </ul>
+          <a href="#contact" class="price-btn outline magnetic">Get Started</a>
+        </div>
+        <div class="price-card featured reveal" style="transition-delay: 0.2s;">
+          <p class="price-tag">Professional</p>
+          <h3 class="price-name">Grow</h3>
+          <p class="price-amount"><span class="currency">$</span>500<span class="period">/mo</span></p>
+          <p class="price-desc">Multi-page site with animations, forms, and everything you need to convert visitors.</p>
+          <ul class="price-features">
+            <li><span class="check">&#10003;</span> Multi-page custom site</li>
+            <li><span class="check">&#10003;</span> Animations &amp; interactions</li>
+            <li><span class="check">&#10003;</span> Contact forms &amp; integrations</li>
+            <li><span class="check">&#10003;</span> Advanced SEO &amp; analytics</li>
+            <li><span class="check">&#10003;</span> Priority support</li>
+            <li><span class="check">&#10003;</span> Unlimited revisions</li>
+          </ul>
+          <a href="#contact" class="price-btn filled magnetic">Get Started</a>
+        </div>
+        <div class="price-card reveal" style="transition-delay: 0.3s;">
+          <p class="price-tag">Enterprise</p>
+          <h3 class="price-name">Scale</h3>
+          <p class="price-amount"><span class="currency">$</span>800<span class="period">/mo</span></p>
+          <p class="price-desc">Full-stack web apps, dashboards, and complex builds for businesses that need more.</p>
+          <ul class="price-features">
+            <li><span class="check">&#10003;</span> Full-stack web applications</li>
+            <li><span class="check">&#10003;</span> Database &amp; authentication</li>
+            <li><span class="check">&#10003;</span> Custom dashboards</li>
+            <li><span class="check">&#10003;</span> API integrations</li>
+            <li><span class="check">&#10003;</span> 24/7 dedicated support</li>
+            <li><span class="check">&#10003;</span> Performance optimization</li>
+          </ul>
+          <a href="#contact" class="price-btn outline magnetic">Get Started</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Why Gwinn Digital -->
-  <section class="why" id="why">
+  <!-- Eyes Section -->
+  <section class="eyes-section" id="work">
     <div class="container">
-      <div class="fade-in">
+      <div class="reveal">
+        <p class="section-label">We See Everything</p>
+      </div>
+      <div class="eyes-container reveal-scale">
+        <div class="eye" id="eye1">
+          <div class="pupil" id="pupil1">
+            <div class="iris"><div class="glint"></div></div>
+          </div>
+        </div>
+        <div class="eye" id="eye2">
+          <div class="pupil" id="pupil2">
+            <div class="iris"><div class="glint"></div></div>
+          </div>
+        </div>
+      </div>
+      <p class="eyes-text reveal">Every pixel. Every detail. <span class="gradient-text">We're watching.</span></p>
+    </div>
+  </section>
+
+  <!-- Parallax Text -->
+  <div class="parallax-text-section">
+    <div class="parallax-line" id="parallax1">DESIGN &bull; DEVELOP &bull; DEPLOY &bull; DESIGN &bull; DEVELOP &bull; DEPLOY &bull; DESIGN &bull; DEVELOP &bull; DEPLOY &bull;</div>
+    <div class="parallax-line" id="parallax2">WEBSITES &bull; APPS &bull; BRANDS &bull; WEBSITES &bull; APPS &bull; BRANDS &bull; WEBSITES &bull; APPS &bull; BRANDS &bull;</div>
+  </div>
+
+  <!-- Morphing Blob -->
+  <section class="morph-section">
+    <div class="container">
+      <div class="morph-grid">
+        <div class="morph-blob-wrap reveal-left">
+          <div class="morph-blob"></div>
+        </div>
+        <div class="morph-text reveal-right">
+          <p class="section-label">Our Approach</p>
+          <h2>Design That <span class="gradient-text">Moves.</span></h2>
+          <p>We don't build static pages. We build experiences. Every interaction is crafted to engage, impress, and convert your visitors into customers.</p>
+          <p>From scroll-triggered animations to interactive elements — your website won't just look good, it'll feel alive.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Auto-scrolling Showcase -->
+  <section class="showcase">
+    <div class="container reveal" style="margin-bottom: 48px; text-align: center;">
+      <p class="section-label">Capabilities</p>
+      <h2 class="section-title">What We Build</h2>
+    </div>
+    <div class="showcase-track" id="showcaseTrack">
+      <div class="showcase-card"><div class="card-bg"></div><div class="showcase-card-content"><h3>Landing Pages</h3><p>High-converting, bold designs</p></div></div>
+      <div class="showcase-card"><div class="card-bg"></div><div class="showcase-card-content"><h3>E-Commerce</h3><p>Online stores that sell</p></div></div>
+      <div class="showcase-card"><div class="card-bg"></div><div class="showcase-card-content"><h3>Web Applications</h3><p>Full-stack custom software</p></div></div>
+      <div class="showcase-card"><div class="card-bg"></div><div class="showcase-card-content"><h3>Portfolios</h3><p>Showcase your work beautifully</p></div></div>
+      <div class="showcase-card"><div class="card-bg"></div><div class="showcase-card-content"><h3>Dashboards</h3><p>Data-driven admin panels</p></div></div>
+      <div class="showcase-card"><div class="card-bg"></div><div class="showcase-card-content"><h3>SaaS Platforms</h3><p>Scalable subscription products</p></div></div>
+      <!-- Duplicate for infinite scroll -->
+      <div class="showcase-card"><div class="card-bg"></div><div class="showcase-card-content"><h3>Landing Pages</h3><p>High-converting, bold designs</p></div></div>
+      <div class="showcase-card"><div class="card-bg"></div><div class="showcase-card-content"><h3>E-Commerce</h3><p>Online stores that sell</p></div></div>
+      <div class="showcase-card"><div class="card-bg"></div><div class="showcase-card-content"><h3>Web Applications</h3><p>Full-stack custom software</p></div></div>
+      <div class="showcase-card"><div class="card-bg"></div><div class="showcase-card-content"><h3>Portfolios</h3><p>Showcase your work beautifully</p></div></div>
+      <div class="showcase-card"><div class="card-bg"></div><div class="showcase-card-content"><h3>Dashboards</h3><p>Data-driven admin panels</p></div></div>
+      <div class="showcase-card"><div class="card-bg"></div><div class="showcase-card-content"><h3>SaaS Platforms</h3><p>Scalable subscription products</p></div></div>
+    </div>
+  </section>
+
+  <!-- Stats Counter -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item reveal">
+          <div class="stat-number" data-target="50">0</div>
+          <div class="stat-label">Projects Delivered</div>
+        </div>
+        <div class="stat-item reveal" style="transition-delay: 0.1s;">
+          <div class="stat-number" data-target="100">0</div>
+          <div class="stat-label">Client Satisfaction %</div>
+        </div>
+        <div class="stat-item reveal" style="transition-delay: 0.2s;">
+          <div class="stat-number" data-target="7">0</div>
+          <div class="stat-label">Day Avg Delivery</div>
+        </div>
+        <div class="stat-item reveal" style="transition-delay: 0.3s;">
+          <div class="stat-number" data-target="24">0</div>
+          <div class="stat-label">/ 7 Support</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Us — Tilt Cards -->
+  <section class="tilt-section" id="why">
+    <div class="container">
+      <div class="reveal" style="text-align:center;">
         <p class="section-label">Why Gwinn Digital?</p>
         <h2 class="section-title">Built Different</h2>
       </div>
-      <div class="why-grid">
-        <div class="why-card fade-in">
-          <div class="why-icon">&#9889;</div>
-          <h3>Fast Delivery</h3>
+      <div class="tilt-grid">
+        <div class="tilt-card reveal" style="transition-delay: 0.1s;">
+          <div class="card-glow"></div>
+          <div class="tilt-icon">&#9889;</div>
+          <h3>Lightning Fast</h3>
           <p>Your site goes live in days, not months. We move fast without cutting corners — because your business can't wait.</p>
         </div>
-        <div class="why-card fade-in">
-          <div class="why-icon">&#127912;</div>
-          <h3>Custom Design</h3>
-          <p>No cookie-cutter templates. Every site is designed from scratch to match your brand, your industry, and your goals.</p>
+        <div class="tilt-card reveal" style="transition-delay: 0.15s;">
+          <div class="card-glow"></div>
+          <div class="tilt-icon">&#127912;</div>
+          <h3>Fully Custom</h3>
+          <p>No templates. No cookie-cutter layouts. Every pixel is designed from scratch for your brand, your industry, your goals.</p>
         </div>
-        <div class="why-card fade-in">
-          <div class="why-icon">&#128736;</div>
-          <h3>Ongoing Support</h3>
-          <p>We don't disappear after launch. Updates, fixes, and improvements are included — your site stays fresh and functional.</p>
+        <div class="tilt-card reveal" style="transition-delay: 0.2s;">
+          <div class="card-glow"></div>
+          <div class="tilt-icon">&#128736;</div>
+          <h3>Always On</h3>
+          <p>We don't disappear after launch. Updates, fixes, and improvements are included — your site stays fresh forever.</p>
         </div>
-        <div class="why-card fade-in">
-          <div class="why-icon">&#128176;</div>
-          <h3>Affordable Pricing</h3>
-          <p>Premium quality at a price that works for small businesses. Starting at $300/month with no hidden fees or surprises.</p>
+        <div class="tilt-card reveal" style="transition-delay: 0.25s;">
+          <div class="card-glow"></div>
+          <div class="tilt-icon">&#128640;</div>
+          <h3>Future-Proof</h3>
+          <p>Built with the latest tech. Your site will be fast, accessible, SEO-optimized, and ready for whatever comes next.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA / Contact Footer -->
+  <!-- CTA Footer -->
   <section class="cta-footer" id="contact">
-    <div class="container fade-in">
+    <div class="container reveal">
       <p class="section-label">Ready?</p>
-      <h2>Let's Build <span class="gradient-word">Something Great.</span></h2>
+      <h2>Let's Build<br><span class="gradient-text">Something Great.</span></h2>
       <p>Reach out and we'll get your project moving — fast.</p>
-      <a href="mailto:cameron@gwinndigital.com" class="cta-btn">Get In Touch</a>
+      <a href="mailto:cameron@gwinndigital.com" class="cta-btn magnetic">Get In Touch</a>
       <div class="contact-row">
         <a href="mailto:cameron@gwinndigital.com" class="contact-link">cameron@gwinndigital.com</a>
         <span style="color: rgba(255,255,255,0.1);">|</span>
@@ -590,58 +1184,197 @@
   <!-- Bottom -->
   <div class="rainbow-line"></div>
   <footer class="bottom-bar">
-    <div class="container">
-      &copy; 2026 Gwinn Digital. All rights reserved.
-    </div>
+    <div class="container">&copy; 2026 Gwinn Digital. All rights reserved.</div>
   </footer>
 
   <script>
+    // ── Custom Cursor ──
+    (function() {
+      var dot = document.getElementById('cursorDot');
+      var ring = document.getElementById('cursorRing');
+      var mx = 0, my = 0, rx = 0, ry = 0;
+
+      document.addEventListener('mousemove', function(e) {
+        mx = e.clientX; my = e.clientY;
+        dot.style.left = mx - 4 + 'px';
+        dot.style.top = my - 4 + 'px';
+      });
+
+      function animateRing() {
+        rx += (mx - rx) * 0.15;
+        ry += (my - ry) * 0.15;
+        ring.style.left = rx - 20 + 'px';
+        ring.style.top = ry - 20 + 'px';
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+
+      document.querySelectorAll('a, button, .magnetic').forEach(function(el) {
+        el.addEventListener('mouseenter', function() { ring.classList.add('hovering'); });
+        el.addEventListener('mouseleave', function() { ring.classList.remove('hovering'); });
+      });
+    })();
+
     // ── Rainbow Bubbles ──
-    (function createBubbles() {
+    (function() {
       var container = document.getElementById('bubbles');
       var colors = ['#ff3366','#ff6633','#ffcc00','#33ff66','#33ccff','#3366ff','#9933ff','#ff33cc'];
-      for (var i = 0; i < 14; i++) {
-        var bubble = document.createElement('div');
-        bubble.className = 'bubble';
-        var size = Math.random() * 300 + 150;
-        bubble.style.width = size + 'px';
-        bubble.style.height = size + 'px';
-        bubble.style.left = Math.random() * 100 + '%';
-        bubble.style.bottom = '-' + size + 'px';
-        bubble.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        bubble.style.animationDuration = (Math.random() * 20 + 15) + 's';
-        bubble.style.animationDelay = (Math.random() * 10) + 's';
-        container.appendChild(bubble);
+      for (var i = 0; i < 12; i++) {
+        var b = document.createElement('div');
+        b.className = 'bubble';
+        var size = Math.random() * 400 + 200;
+        b.style.width = size + 'px';
+        b.style.height = size + 'px';
+        b.style.left = Math.random() * 100 + '%';
+        b.style.bottom = '-' + size + 'px';
+        b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        b.style.animationDuration = (Math.random() * 25 + 20) + 's';
+        b.style.animationDelay = (Math.random() * 15) + 's';
+        container.appendChild(b);
       }
     })();
 
-    // ── Mobile Nav Toggle ──
+    // ── Mobile Nav ──
     document.getElementById('navToggle').addEventListener('click', function() {
       document.getElementById('navLinks').classList.toggle('open');
     });
-
-    // Close nav on link click (mobile)
     document.querySelectorAll('.nav-links a').forEach(function(link) {
       link.addEventListener('click', function() {
         document.getElementById('navLinks').classList.remove('open');
       });
     });
 
-    // ── Scroll Fade-In ──
-    (function setupFadeIn() {
-      var elements = document.querySelectorAll('.fade-in');
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry, index) {
+    // ── Scroll Reveal ──
+    (function() {
+      var els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
           if (entry.isIntersecting) {
-            // Stagger the animations
-            setTimeout(function() {
-              entry.target.classList.add('visible');
-            }, index * 100);
-            observer.unobserve(entry.target);
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.1 });
-      elements.forEach(function(el) { observer.observe(el); });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function(el) { obs.observe(el); });
+    })();
+
+    // ── Eyes Follow Cursor ──
+    (function() {
+      var eyes = [
+        { eye: document.getElementById('eye1'), pupil: document.getElementById('pupil1') },
+        { eye: document.getElementById('eye2'), pupil: document.getElementById('pupil2') }
+      ];
+
+      document.addEventListener('mousemove', function(e) {
+        eyes.forEach(function(obj) {
+          var rect = obj.eye.getBoundingClientRect();
+          var cx = rect.left + rect.width / 2;
+          var cy = rect.top + rect.height / 2;
+          var dx = e.clientX - cx;
+          var dy = e.clientY - cy;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          var maxMove = 30;
+          var moveX = (dx / dist) * Math.min(dist * 0.1, maxMove);
+          var moveY = (dy / dist) * Math.min(dist * 0.1, maxMove);
+          obj.pupil.style.transform = 'translate(calc(-50% + ' + moveX + 'px), calc(-50% + ' + moveY + 'px))';
+        });
+      });
+    })();
+
+    // ── Parallax Text on Scroll ──
+    (function() {
+      var p1 = document.getElementById('parallax1');
+      var p2 = document.getElementById('parallax2');
+
+      window.addEventListener('scroll', function() {
+        var scrollY = window.scrollY;
+        p1.style.transform = 'translateX(' + (-scrollY * 0.3) + 'px)';
+        p2.style.transform = 'translateX(' + (scrollY * 0.2 - 200) + 'px)';
+      });
+    })();
+
+    // ── Tilt Cards ──
+    (function() {
+      document.querySelectorAll('.tilt-card').forEach(function(card) {
+        var glow = card.querySelector('.card-glow');
+        card.addEventListener('mousemove', function(e) {
+          var rect = card.getBoundingClientRect();
+          var x = e.clientX - rect.left;
+          var y = e.clientY - rect.top;
+          var centerX = rect.width / 2;
+          var centerY = rect.height / 2;
+          var rotateX = (y - centerY) / 12;
+          var rotateY = (centerX - x) / 12;
+          card.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)';
+          if (glow) {
+            glow.style.left = x - 100 + 'px';
+            glow.style.top = y - 100 + 'px';
+          }
+        });
+        card.addEventListener('mouseleave', function() {
+          card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
+        });
+      });
+    })();
+
+    // ── Number Counter ──
+    (function() {
+      var counters = document.querySelectorAll('.stat-number[data-target]');
+      var counted = new Set();
+
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && !counted.has(entry.target)) {
+            counted.add(entry.target);
+            var target = parseInt(entry.target.getAttribute('data-target'));
+            var current = 0;
+            var step = Math.max(1, Math.floor(target / 60));
+            var timer = setInterval(function() {
+              current += step;
+              if (current >= target) {
+                current = target;
+                clearInterval(timer);
+              }
+              entry.target.textContent = current + (target === 100 ? '%' : '+');
+            }, 30);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      counters.forEach(function(c) { obs.observe(c); });
+    })();
+
+    // ── Magnetic Buttons ──
+    (function() {
+      document.querySelectorAll('.magnetic').forEach(function(el) {
+        el.addEventListener('mousemove', function(e) {
+          var rect = el.getBoundingClientRect();
+          var x = e.clientX - rect.left - rect.width / 2;
+          var y = e.clientY - rect.top - rect.height / 2;
+          el.style.transform = 'translate(' + x * 0.15 + 'px, ' + y * 0.15 + 'px)';
+        });
+        el.addEventListener('mouseleave', function() {
+          el.style.transform = 'translate(0, 0)';
+        });
+      });
+    })();
+
+    // ── Nav hide/show on scroll ──
+    (function() {
+      var nav = document.getElementById('mainNav');
+      var topBar = document.querySelector('.top-bar');
+      var lastScroll = 0;
+
+      window.addEventListener('scroll', function() {
+        var st = window.scrollY;
+        if (st > 50) {
+          topBar.style.transform = 'translateY(-100%)';
+          topBar.style.transition = 'transform 0.3s';
+        } else {
+          topBar.style.transform = 'translateY(0)';
+        }
+        lastScroll = st;
+      });
     })();
   </script>
 </body>
