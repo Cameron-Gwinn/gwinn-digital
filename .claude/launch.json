@@ -4,8 +4,8 @@
     {
       "name": "gwinn-digital",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "main", "-l", "3000", "--no-clipboard"],
-      "port": 3000
+      "runtimeArgs": ["serve", "main", "--no-clipboard"],
+      "autoPort": true
     }
   ]
 }

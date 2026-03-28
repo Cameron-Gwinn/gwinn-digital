@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Gwinn Digital — Your Website. Delivered.</title>
-  <meta name="description" content="Professional websites for your business — starting at $300/month. Custom design, fast delivery, ongoing support.">
+  <meta name="description" content="Professional websites for your business — starting at $299/month. Custom design, fast delivery, ongoing support.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23e05555'/><stop offset='100%25' stop-color='%23e05555'/></linearGradient></defs><rect width='32' height='32' rx='6' fill='%230a0a0f'/><text x='4' y='23' font-family='Arial Black' font-weight='900' font-size='18' fill='url(%23g)'>G</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,7 @@
       --font-body: 'Inter', sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; touch-action: pan-y; }
 
     body {
       font-family: var(--font-body);
@@ -784,6 +784,25 @@
       box-shadow: 0 10px 30px rgba(255,51,102,0.3);
     }
 
+    @media (max-width: 768px) {
+      .pricing { padding: 60px 0; }
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 24px;
+      }
+      .price-card {
+        padding: 28px 20px;
+        border-radius: 14px;
+      }
+      .price-name { font-size: 1.5rem; }
+      .price-amount { font-size: 2.5rem; }
+      .price-desc { font-size: 0.8rem; margin-bottom: 16px; }
+      .price-features { margin-bottom: 20px; }
+      .price-features li { font-size: 0.8rem; padding: 6px 0; }
+      .price-btn { padding: 12px; font-size: 0.95rem; }
+    }
+
     /* ── Portfolio Showcase ── */
     .portfolio-section {
       padding: 120px 0;
@@ -894,31 +913,31 @@
 
     /* ── Morph + Testimonials Section ── */
     .morph-section {
-      padding: 100px 0;
+      padding: 40px 0 80px;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
     }
     .morph-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: 60px;
-      align-items: center;
-    }
-    @media (max-width: 768px) {
-      .morph-grid { grid-template-columns: 1fr; gap: 40px; }
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
     }
     .morph-left {
-      position: relative;
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
     }
     .morph-blob-wrap {
-      width: 100%;
-      aspect-ratio: 1;
+      width: 350px;
+      height: 350px;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      max-width: 320px;
-      margin: 0 auto;
     }
     .morph-blob {
       width: 100%;
@@ -927,7 +946,7 @@
       background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6), var(--rainbow-3));
       background-size: 300% 300%;
       animation: blobMorph 8s ease-in-out infinite, gradientShift 6s ease infinite;
-      opacity: 0.85;
+      opacity: 0.35;
     }
     @keyframes blobMorph {
       0% { border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%; }
@@ -938,10 +957,13 @@
     }
     .morph-right {
       position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 60px 20px;
     }
     .morph-right h2 {
       font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(2.5rem, 5vw, 4rem);
       letter-spacing: 0.04em;
       line-height: 1.05;
       margin-bottom: 12px;
@@ -992,6 +1014,7 @@
       display: flex;
       gap: 8px;
       margin-top: 20px;
+      justify-content: center;
     }
     .testimonial-dots .t-dot {
       width: 8px;
@@ -1391,7 +1414,7 @@
       </div>
       <div class="reveal" style="transition-delay: 0.35s;">
         <p class="hero-sub">
-          Custom-designed, hand-coded websites for businesses that want to stand out — starting at <strong>$300/month</strong>.
+          Custom-designed websites for businesses that want to stand out — starting at <strong>$299/month</strong>.
         </p>
       </div>
       <div class="reveal" style="transition-delay: 0.45s;">
@@ -1412,61 +1435,6 @@
   </section>
 
   <!-- Pricing -->
-  <section class="pricing" id="pricing">
-    <div class="container">
-      <div class="reveal" style="text-align:center;">
-        <p class="section-label">Pricing</p>
-        <h2 class="section-title">Simple, Transparent Plans</h2>
-      </div>
-      <div class="pricing-grid">
-        <div class="price-card reveal" style="transition-delay: 0.1s;">
-          <p class="price-tag">Starter</p>
-          <h3 class="price-name">Launch</h3>
-          <p class="price-amount"><span class="currency">$</span>300<span class="period">/mo</span></p>
-          <p class="price-desc">Perfect for small businesses that need a professional online presence — fast.</p>
-          <ul class="price-features">
-            <li><span class="check">&#10003;</span> Custom single-page site</li>
-            <li><span class="check">&#10003;</span> Mobile responsive</li>
-            <li><span class="check">&#10003;</span> Basic SEO setup</li>
-            <li><span class="check">&#10003;</span> Monthly updates included</li>
-            <li><span class="check">&#10003;</span> Hosting included</li>
-          </ul>
-          <a href="#contact" class="price-btn outline magnetic">Get Started</a>
-        </div>
-        <div class="price-card featured reveal" style="transition-delay: 0.2s;">
-          <p class="price-tag">Professional</p>
-          <h3 class="price-name">Grow</h3>
-          <p class="price-amount"><span class="currency">$</span>500<span class="period">/mo</span></p>
-          <p class="price-desc">Multi-page site with animations, forms, and everything you need to convert visitors.</p>
-          <ul class="price-features">
-            <li><span class="check">&#10003;</span> Multi-page custom site</li>
-            <li><span class="check">&#10003;</span> Animations &amp; interactions</li>
-            <li><span class="check">&#10003;</span> Contact forms &amp; integrations</li>
-            <li><span class="check">&#10003;</span> Advanced SEO &amp; analytics</li>
-            <li><span class="check">&#10003;</span> Priority support</li>
-            <li><span class="check">&#10003;</span> Unlimited revisions</li>
-          </ul>
-          <a href="#contact" class="price-btn filled magnetic">Get Started</a>
-        </div>
-        <div class="price-card reveal" style="transition-delay: 0.3s;">
-          <p class="price-tag">Enterprise</p>
-          <h3 class="price-name">Scale</h3>
-          <p class="price-amount"><span class="currency">$</span>800<span class="period">/mo</span></p>
-          <p class="price-desc">Full-stack web apps, dashboards, and complex builds for businesses that need more.</p>
-          <ul class="price-features">
-            <li><span class="check">&#10003;</span> Full-stack web applications</li>
-            <li><span class="check">&#10003;</span> Database &amp; authentication</li>
-            <li><span class="check">&#10003;</span> Custom dashboards</li>
-            <li><span class="check">&#10003;</span> API integrations</li>
-            <li><span class="check">&#10003;</span> 24/7 dedicated support</li>
-            <li><span class="check">&#10003;</span> Performance optimization</li>
-          </ul>
-          <a href="#contact" class="price-btn outline magnetic">Get Started</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Portfolio Showcase -->
   <section class="portfolio-section" id="work">
     <div class="container">
@@ -1532,6 +1500,32 @@
     <div class="parallax-line" id="parallax1">DESIGN &bull; DEVELOP &bull; DEPLOY &bull; DESIGN &bull; DEVELOP &bull; DEPLOY &bull; DESIGN &bull; DEVELOP &bull; DEPLOY &bull;</div>
     <div class="parallax-line" id="parallax2">WEBSITES &bull; APPS &bull; BRANDS &bull; WEBSITES &bull; APPS &bull; BRANDS &bull; WEBSITES &bull; APPS &bull; BRANDS &bull;</div>
   </div>
+
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="reveal" style="text-align:center;">
+        <p class="section-label">Pricing</p>
+        <h2 class="section-title">Simple, Transparent Plans</h2>
+      </div>
+      <div class="pricing-grid" style="max-width:480px; margin-left:auto; margin-right:auto; margin-top:48px;">
+        <div class="price-card reveal">
+          <p class="price-tag">All-Inclusive</p>
+          <h3 class="price-name">Your Website, Handled</h3>
+          <p class="price-amount"><span class="currency">$</span>299<span class="period">/mo</span></p>
+          <p class="price-desc">Everything you need for a professional online presence — design, development, hosting, and ongoing support.</p>
+          <ul class="price-features">
+            <li><span class="check">&#10003;</span> Custom-designed website</li>
+            <li><span class="check">&#10003;</span> Mobile responsive</li>
+            <li><span class="check">&#10003;</span> SEO setup &amp; analytics</li>
+            <li><span class="check">&#10003;</span> Hosting included</li>
+            <li><span class="check">&#10003;</span> Ongoing support</li>
+          </ul>
+          <a href="#contact" class="price-btn filled magnetic">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Morph + Testimonials -->
   <section class="morph-section">
