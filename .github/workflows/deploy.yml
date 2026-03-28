@@ -47,7 +47,12 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./main/
           server-dir: /public_html/
-          dangerous-clean-slate: true
+          exclude: |
+            **/proposal1/**
+            **/proposal2/**
+            **/proposal3/**
+            **/proposal4/**
+            **/proposal5/**
 
   deploy-proposal1:
     needs: detect-changes
