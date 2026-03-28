@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gwinn Digital — Your Website. Delivered.</title>
+  <meta name="description" content="Professional websites for your business — starting at $300/month. Custom design, fast delivery, ongoing support.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --text: #f0f0f5;
+      --muted: #8888aa;
+      --rainbow-1: #ff3366;
+      --rainbow-2: #ff6633;
+      --rainbow-3: #ffcc00;
+      --rainbow-4: #33ff66;
+      --rainbow-5: #3366ff;
+      --rainbow-6: #9933ff;
+      --rainbow-7: #ff33cc;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ── Rainbow Bubbles ── */
+    .bubbles-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.12;
+      filter: blur(60px);
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(110vh) translateX(0) scale(1); }
+      25% { transform: translateY(80vh) translateX(40px) scale(1.05); }
+      50% { transform: translateY(50vh) translateX(-30px) scale(0.95); }
+      75% { transform: translateY(20vh) translateX(50px) scale(1.08); }
+      100% { transform: translateY(-20vh) translateX(-20px) scale(1); }
+    }
+
+    /* ── Shared ── */
+    section { position: relative; z-index: 1; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 1.2vw, 1rem);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-3), var(--rainbow-5), var(--rainbow-7));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    /* ── Fade-in on scroll ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 0.06em;
+      background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-3), var(--rainbow-5));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      margin: 6px 0;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .nav-toggle { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(10,10,15,0.97);
+        flex-direction: column;
+        padding: 24px;
+        gap: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+      .nav-links.open { display: flex; }
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 500px;
+      background: radial-gradient(ellipse, rgba(255,51,102,0.15), rgba(51,102,255,0.1), transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 10vw, 9rem);
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 .gradient-word {
+      background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3), var(--rainbow-4), var(--rainbow-5), var(--rainbow-6), var(--rainbow-7));
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hero-sub {
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 40px;
+      font-weight: 400;
+    }
+
+    .hero-sub strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 48px;
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 60px;
+      background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-5), var(--rainbow-6));
+      background-size: 200% 200%;
+      animation: gradientShift 3s ease infinite;
+      box-shadow: 0 0 40px rgba(255,51,102,0.3), 0 0 80px rgba(51,102,255,0.15);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 62px;
+      background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-3), var(--rainbow-5), var(--rainbow-7));
+      background-size: 300% 300%;
+      animation: gradientShift 3s ease infinite;
+      z-index: -1;
+      filter: blur(12px);
+      opacity: 0.6;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 0 60px rgba(255,51,102,0.4), 0 0 120px rgba(51,102,255,0.2);
+    }
+
+    /* Pulse ring */
+    .cta-btn::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 64px;
+      border: 2px solid rgba(255,255,255,0.2);
+      animation: pulse-ring 2s ease-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.15); opacity: 0; }
+    }
+
+    /* ── Proposals ── */
+    .proposals { padding: 120px 0; }
+
+    .proposals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .proposal-card {
+      position: relative;
+      border-radius: 16px;
+      padding: 40px 24px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text);
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .proposal-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.12;
+      transition: opacity 0.4s;
+    }
+
+    .proposal-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .proposal-card:hover::before { opacity: 0.22; }
+
+    .proposal-card:nth-child(1)::before { background: linear-gradient(135deg, #ff3366, #ff6633); }
+    .proposal-card:nth-child(2)::before { background: linear-gradient(135deg, #ff6633, #ffcc00); }
+    .proposal-card:nth-child(3)::before { background: linear-gradient(135deg, #33ff66, #33ccff); }
+    .proposal-card:nth-child(4)::before { background: linear-gradient(135deg, #3366ff, #9933ff); }
+    .proposal-card:nth-child(5)::before { background: linear-gradient(135deg, #9933ff, #ff33cc); }
+
+    .proposal-card .card-number {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      line-height: 1;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .proposal-card:nth-child(1) .card-number { color: var(--rainbow-1); }
+    .proposal-card:nth-child(2) .card-number { color: var(--rainbow-2); }
+    .proposal-card:nth-child(3) .card-number { color: var(--rainbow-4); }
+    .proposal-card:nth-child(4) .card-number { color: var(--rainbow-5); }
+    .proposal-card:nth-child(5) .card-number { color: var(--rainbow-6); }
+
+    .proposal-card .card-label {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .proposal-card .card-status {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 12px;
+      position: relative;
+    }
+
+    /* ── Why Section ── */
+    .why { padding: 120px 0; }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .why-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 40px 32px;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .why-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    .why-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+
+    .why-card:nth-child(1) .why-icon { background: rgba(255,51,102,0.15); }
+    .why-card:nth-child(2) .why-icon { background: rgba(255,204,0,0.15); }
+    .why-card:nth-child(3) .why-icon { background: rgba(51,102,255,0.15); }
+    .why-card:nth-child(4) .why-icon { background: rgba(153,51,255,0.15); }
+
+    .why-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+
+    .why-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* ── CTA Footer ── */
+    .cta-footer {
+      padding: 120px 0 60px;
+      text-align: center;
+    }
+
+    .cta-footer h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+
+    .cta-footer p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 500px;
+      margin: 0 auto 40px;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-top: 48px;
+    }
+
+    .contact-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+    .contact-link:hover { color: var(--text); }
+
+    /* ── Bottom Bar ── */
+    .bottom-bar {
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 24px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .rainbow-line {
+      height: 3px;
+      background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3), var(--rainbow-4), var(--rainbow-5), var(--rainbow-6), var(--rainbow-7));
+      background-size: 200% 100%;
+      animation: gradientShift 4s linear infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Rainbow Bubbles -->
+  <div class="bubbles-container" id="bubbles"></div>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container">
+      <a href="#" class="nav-logo">GWINN DIGITAL</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#proposals">Proposals</a></li>
+        <li><a href="#why">Why Us</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <h1>
+        YOUR WEBSITE.<br>
+        <span class="gradient-word">DELIVERED.</span>
+      </h1>
+      <p class="hero-sub">
+        Professional websites for your business —<br>
+        starting at <strong>$300/month</strong>.
+      </p>
+      <a href="#contact" class="cta-btn">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Proposals -->
+  <section class="proposals" id="proposals">
+    <div class="container">
+      <div class="fade-in">
+        <p class="section-label">Client Proposals</p>
+        <h2 class="section-title">Active Proposals</h2>
+      </div>
+      <div class="proposals-grid">
+        <a href="https://proposal1.gwinndigital.com" class="proposal-card fade-in">
+          <div class="card-number">01</div>
+          <div class="card-label">Proposal 1</div>
+          <div class="card-status">View Proposal &rarr;</div>
+        </a>
+        <a href="https://proposal2.gwinndigital.com" class="proposal-card fade-in">
+          <div class="card-number">02</div>
+          <div class="card-label">Proposal 2</div>
+          <div class="card-status">View Proposal &rarr;</div>
+        </a>
+        <a href="https://proposal3.gwinndigital.com" class="proposal-card fade-in">
+          <div class="card-number">03</div>
+          <div class="card-label">Proposal 3</div>
+          <div class="card-status">View Proposal &rarr;</div>
+        </a>
+        <a href="https://proposal4.gwinndigital.com" class="proposal-card fade-in">
+          <div class="card-number">04</div>
+          <div class="card-label">Proposal 4</div>
+          <div class="card-status">View Proposal &rarr;</div>
+        </a>
+        <a href="https://proposal5.gwinndigital.com" class="proposal-card fade-in">
+          <div class="card-number">05</div>
+          <div class="card-label">Proposal 5</div>
+          <div class="card-status">View Proposal &rarr;</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Gwinn Digital -->
+  <section class="why" id="why">
+    <div class="container">
+      <div class="fade-in">
+        <p class="section-label">Why Gwinn Digital?</p>
+        <h2 class="section-title">Built Different</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card fade-in">
+          <div class="why-icon">&#9889;</div>
+          <h3>Fast Delivery</h3>
+          <p>Your site goes live in days, not months. We move fast without cutting corners — because your business can't wait.</p>
+        </div>
+        <div class="why-card fade-in">
+          <div class="why-icon">&#127912;</div>
+          <h3>Custom Design</h3>
+          <p>No cookie-cutter templates. Every site is designed from scratch to match your brand, your industry, and your goals.</p>
+        </div>
+        <div class="why-card fade-in">
+          <div class="why-icon">&#128736;</div>
+          <h3>Ongoing Support</h3>
+          <p>We don't disappear after launch. Updates, fixes, and improvements are included — your site stays fresh and functional.</p>
+        </div>
+        <div class="why-card fade-in">
+          <div class="why-icon">&#128176;</div>
+          <h3>Affordable Pricing</h3>
+          <p>Premium quality at a price that works for small businesses. Starting at $300/month with no hidden fees or surprises.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / Contact Footer -->
+  <section class="cta-footer" id="contact">
+    <div class="container fade-in">
+      <p class="section-label">Ready?</p>
+      <h2>Let's Build <span class="gradient-word">Something Great.</span></h2>
+      <p>Reach out and we'll get your project moving — fast.</p>
+      <a href="mailto:cameron@gwinndigital.com" class="cta-btn">Get In Touch</a>
+      <div class="contact-row">
+        <a href="mailto:cameron@gwinndigital.com" class="contact-link">cameron@gwinndigital.com</a>
+        <span style="color: rgba(255,255,255,0.1);">|</span>
+        <a href="tel:+14697772518" class="contact-link">(469) 777-2518</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom -->
+  <div class="rainbow-line"></div>
+  <footer class="bottom-bar">
+    <div class="container">
+      &copy; 2026 Gwinn Digital. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    // ── Rainbow Bubbles ──
+    (function createBubbles() {
+      var container = document.getElementById('bubbles');
+      var colors = ['#ff3366','#ff6633','#ffcc00','#33ff66','#33ccff','#3366ff','#9933ff','#ff33cc'];
+      for (var i = 0; i < 14; i++) {
+        var bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        var size = Math.random() * 300 + 150;
+        bubble.style.width = size + 'px';
+        bubble.style.height = size + 'px';
+        bubble.style.left = Math.random() * 100 + '%';
+        bubble.style.bottom = '-' + size + 'px';
+        bubble.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        bubble.style.animationDuration = (Math.random() * 20 + 15) + 's';
+        bubble.style.animationDelay = (Math.random() * 10) + 's';
+        container.appendChild(bubble);
+      }
+    })();
+
+    // ── Mobile Nav Toggle ──
+    document.getElementById('navToggle').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // Close nav on link click (mobile)
+    document.querySelectorAll('.nav-links a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+
+    // ── Scroll Fade-In ──
+    (function setupFadeIn() {
+      var elements = document.querySelectorAll('.fade-in');
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry, index) {
+          if (entry.isIntersecting) {
+            // Stagger the animations
+            setTimeout(function() {
+              entry.target.classList.add('visible');
+            }, index * 100);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      elements.forEach(function(el) { observer.observe(el); });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      main: ${{ steps.filter.outputs.main }}
+      proposal1: ${{ steps.filter.outputs.proposal1 }}
+      proposal2: ${{ steps.filter.outputs.proposal2 }}
+      proposal3: ${{ steps.filter.outputs.proposal3 }}
+      proposal4: ${{ steps.filter.outputs.proposal4 }}
+      proposal5: ${{ steps.filter.outputs.proposal5 }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            main:
+              - 'main/**'
+            proposal1:
+              - 'proposal1/**'
+            proposal2:
+              - 'proposal2/**'
+            proposal3:
+              - 'proposal3/**'
+            proposal4:
+              - 'proposal4/**'
+            proposal5:
+              - 'proposal5/**'
+
+  deploy-main:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.main == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy main site
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./main/
+          server-dir: /public_html/
+
+  deploy-proposal1:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.proposal1 == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy proposal1
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./proposal1/
+          server-dir: /public_html/proposal1/
+
+  deploy-proposal2:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.proposal2 == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy proposal2
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./proposal2/
+          server-dir: /public_html/proposal2/
+
+  deploy-proposal3:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.proposal3 == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy proposal3
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./proposal3/
+          server-dir: /public_html/proposal3/
+
+  deploy-proposal4:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.proposal4 == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy proposal4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./proposal4/
+          server-dir: /public_html/proposal4/
+
+  deploy-proposal5:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.proposal5 == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy proposal5
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./proposal5/
+          server-dir: /public_html/proposal5/
